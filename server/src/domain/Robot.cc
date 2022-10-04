@@ -2,22 +2,25 @@
 
 #include <iostream>
 
-void Robot::Move(int units) const
-{
-    std::cout << "Robot[" + std::to_string(this->id_) + "] moved by: " + std::to_string(units) << std::endl;
+
+void Robot::Place(
+    const std::string& mapName, 
+    const Coordinates& coordinates, 
+    const Orientation& orientation) {
+
+    currentMapName_ = mapName;
+    coordinates_ = coordinates;
+    orientation_ = orientation;
 }
 
-void Robot::RotateLeft()
-{
-    std::cout << "Robot[" + std::to_string(this->id_) + "] rotated left" << std::endl;
+void Robot::Move(const Coordinates& coordinates) {
+    coordinates_ = coordinates;
 }
 
-void Robot::RotateRight()
-{
-    std::cout << "Robot[" + std::to_string(this->id_) + "] rotated right" << std::endl;
+void Robot::RotateLeft() {
+    orientation_.RotateLeft();
 }
 
-void Robot::Place(const Coordinates& coordinates)
-{
-    std::cout << "Robot[" + std::to_string(this->id_) + "] placed" << std::endl;
+void Robot::RotateRight() {
+    orientation_.RotateRight();
 }

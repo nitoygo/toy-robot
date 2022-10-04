@@ -6,5 +6,10 @@ class Placeable
 {
 public:
     virtual ~Placeable() = default;
-    virtual void Place(const Coordinates& coordinates) = 0;
+
+    virtual void Place(
+        const std::string& mapName, 
+        const Coordinates& coordinates, 
+        const Orientation& orientation) = 0;
+
 };

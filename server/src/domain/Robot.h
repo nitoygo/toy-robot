@@ -7,13 +7,21 @@
 #include "Coordinates.h"
 
 class Robot : public BaseObject, 
+    public Placeable,
     public Movable,
-    public Rotatable,
-    public Placeable
+    public Rotatable
 {
 public:
-    void Move(int units) const override;
+    void Place(
+        const std::string& mapName, 
+        const Coordinates& coordinates, 
+        const Orientation& orientation) override;
+
+    void Move(const Coordinates& coordinates) override;
+
     void RotateLeft() override;
+
     void RotateRight() override;
-    void Place(const Coordinates& coordinates) override;
+
+
 };

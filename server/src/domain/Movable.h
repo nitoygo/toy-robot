@@ -1,8 +1,12 @@
 #pragma once
 
+#include "Coordinates.h"
+
 class Movable
 {
 public:
     virtual ~Movable() = default;
-    virtual void Move(int units) const = 0;
+
+    virtual void Move(const Coordinates& coordinates) = 0;
+
 };
