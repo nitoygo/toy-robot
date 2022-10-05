@@ -14,8 +14,6 @@ public:
 
     void StoreMap(std::unique_ptr<Map>& map) override;
 
-    void UpdateMap(const std::unique_ptr<Map>& map) override;
-
 private:
     std::unordered_map<std::string, std::unique_ptr<Map>> repository_;
 

@@ -17,7 +17,3 @@ std::unique_ptr<BaseObject> const& ObjectPersistenceAdapter::LoadObject(int id) 
 void ObjectPersistenceAdapter::StoreObject(std::unique_ptr<BaseObject>& object) {
     repository_[object->GetId()] = std::move(object);
 }
-
-void ObjectPersistenceAdapter::UpdateObject(const std::unique_ptr<BaseObject>& object) {
-
-}

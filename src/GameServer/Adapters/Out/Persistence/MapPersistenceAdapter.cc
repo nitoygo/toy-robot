@@ -17,7 +17,3 @@ std::unique_ptr<Map> const& MapPersistenceAdapter::LoadMap(std::string name) {
 void MapPersistenceAdapter::StoreMap(std::unique_ptr<Map>& map) {
     repository_[map->GetName()] = std::move(map);
 }
-
-void MapPersistenceAdapter::UpdateMap(const std::unique_ptr<Map>& map) {
-
-}

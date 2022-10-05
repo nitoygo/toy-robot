@@ -12,8 +12,6 @@ public:
 
     void StoreObject(std::unique_ptr<BaseObject>& object) override;
 
-    void UpdateObject(const std::unique_ptr<BaseObject>& object) override;
-
 private:
     std::unordered_map<int, std::unique_ptr<BaseObject>> repository_;
 

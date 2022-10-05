@@ -14,6 +14,4 @@ public:
 
     virtual void StoreMap(std::unique_ptr<Map>& map) = 0;
 
-    virtual void UpdateMap(const std::unique_ptr<Map>& map) = 0;
-
 };

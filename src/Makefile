@@ -1,12 +1,9 @@
-TARGET_EXEC := toy-robot-server
-
-SHARED_HEADERS_DIRS = ../shared
+TARGET_EXEC := ToyRobotDemo
 
 BUILD_DIR := ./build
-SRC_DIRS := ./src $(SHARED_HEADERS_DIRS)
+SRC_DIRS := .
 
-# Find all the C and C++ files we want to compile
-# Note the single quotes around the * expressions. Make will incorrectly expand these otherwise.
+# Find all C and C++ files
 SRCS := $(shell find $(SRC_DIRS) -name '*.cc')
 
 # String substitution for every C++ file.
@@ -17,6 +14,7 @@ DEPS := $(OBJS:.o=.d)
 
 # Every folder in ./src will need to be passed to GCC so that it can find header files
 INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+
 # Add a prefix to INC_DIRS. So moduleA would become -ImoduleA. GCC understands this -I flag
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
@@ -37,7 +35,4 @@ $(BUILD_DIR)/%.cc.o: %.cc
 clean:
 	rm -r $(BUILD_DIR)
 
-# Include the .d makefiles. The - at the front suppresses the errors of missing
-# Makefiles. Initially, all the .d files will be missing, and we don't want those
-# errors to show up.
 -include $(DEPS)

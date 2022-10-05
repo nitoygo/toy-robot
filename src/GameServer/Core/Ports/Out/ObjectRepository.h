@@ -13,6 +13,4 @@ public:
 
     virtual void StoreObject(std::unique_ptr<BaseObject>& object) = 0;
 
-    virtual void UpdateObject(const std::unique_ptr<BaseObject>& object) = 0;
-
 };
