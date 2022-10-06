@@ -5,6 +5,7 @@
 
 #include <iostream>
 
+#define EMPTY (-1)
 
 namespace MapHelper {
     unsigned int GetIndexOf(const Map& map, const Coordinates& coordinates) {
@@ -17,6 +18,14 @@ namespace MapHelper {
     }
 }
 
+
+Map::Map(std::string name, int width, int height) : 
+    name_(name), 
+    width_(width), 
+    height_(height), 
+    area_(width * height, EMPTY) {}
+
+
 void Map::PutObject(int objectId, const Coordinates& coordinates) {
     try {
         int index = MapHelper::GetIndexOf(*this, coordinates);
@@ -28,22 +37,20 @@ void Map::PutObject(int objectId, const Coordinates& coordinates) {
     }
 }
 
-void Map::RemoveObject(int objectId) {
-    auto iterator = find(this->area_.begin(), this->area_.end(), objectId);
-    if (iterator != this->area_.end())
-    {
-        *(iterator) = 0;
-    }
+void Map::RemoveObjectAt(const Coordinates& oldCoordinates) {
+    this->PutObject(EMPTY, oldCoordinates);
 }
 
-void Map::TransferObject(int objectId, const Coordinates& coordinates) {
-    this->RemoveObject(objectId);
-    this->PutObject(objectId, coordinates);
+void Map::TransferObject(int objectId, const Coordinates& oldCoordinates, 
+    const Coordinates& newCoordinates) {
+
+    this->RemoveObjectAt(oldCoordinates);
+    this->PutObject(objectId, newCoordinates);
 }
 
 bool Map::CoordinatesAvailable(const Coordinates& coordinates) {
     if (MapHelper::CoordinatesWithinRange(*this, coordinates)) {
-        return !this->GetObjectAt(coordinates);
+        return this->GetObjectAt(coordinates) == EMPTY;
     }
 
     return false;

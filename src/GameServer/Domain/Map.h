@@ -9,19 +9,16 @@
 class Map
 {
 public:
-    Map() = default;
-
-    explicit Map(std::string name, int width, int height)
-        : name_(name), width_(width), height_(height), area_(width * height) {}
+    explicit Map(std::string name, int width, int height);
 
     virtual ~Map() = default;
 
-
     void PutObject(int objectId, const Coordinates& coordinates);
 
-    void RemoveObject(int objectId);
+    void RemoveObjectAt(const Coordinates& oldCoordinates);
 
-    void TransferObject(int objectId, const Coordinates& coordinates);
+    void TransferObject(int objectId, const Coordinates& oldCoordinates, 
+        const Coordinates& newCoordinates);
 
     int GetObjectAt(const Coordinates& coordinates);
 

@@ -64,7 +64,9 @@ void MoveObjectService::MoveObject(const MoveObjectCommand& command) {
 
     Coordinates moveCoordinates = GetMoveCoordinates(object, command.units);
     if (map->CoordinatesAvailable(moveCoordinates)) {
-        map->TransferObject(command.id, moveCoordinates);
+
+        Coordinates oldCoordinates = object->GetCoordinates();
+        map->TransferObject(command.id, oldCoordinates, moveCoordinates);
 
         Movable& moveableObject = AsMovableObject(object.get());
         moveableObject.Move(moveCoordinates);
