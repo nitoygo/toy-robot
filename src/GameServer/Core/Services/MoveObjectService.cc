@@ -5,10 +5,13 @@
 #include "Movable.h"
 #include "Orientation.h"
 #include "Map.h"
+
 #include "InvalidCoordinatesException.h"
 #include "InvalidActionException.h"
+#include "InvalidStateException.h"
 
 #include <iostream>
+
 
 Movable& AsMovableObject(BaseObject* object) {
     Movable* movableObject = dynamic_cast<Movable *>(object);
@@ -28,7 +31,7 @@ std::unique_ptr<Map> const&  GetObjectCurrentMap(
         return mapRepository->LoadMap(currentMapName);
     }
     else {
-        throw InvalidActionException("Object[" + std::to_string(object->GetId()) + "] is not yet placed to a map");
+        throw InvalidStateException("Object[" + std::to_string(object->GetId()) + "] is not yet placed to a map");
     }
 }
 

@@ -6,13 +6,12 @@ This project aims to solve and provide a demo application for [Toy Robot Code Ch
 
 * [Source](src/)  
   * [GameServer](src/GameServer)  
-  Contains the modules that comprises the game server
     * [Core](src/GameServer/Core)  
     Contains the implementation of the core application's use cases
     * [Domain](src/GameServier/Domain)  
     Contains the domain entities that the use cases works on
     * [Adapters](src/GameServer/Adapters)  
-    Contains the adapters that interacts with or used by the core
+    Contains adapters implementation that interacts with or used by the core
   * [Demo Application](DemoApplication.md)  
   Wires the components together and provide a basic CLI to demonstrate
 

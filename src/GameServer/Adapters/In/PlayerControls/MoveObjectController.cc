@@ -3,15 +3,15 @@
 #include "MoveObjectCommand.h"
 
 #include <iostream>
+#include <string>
 
 
-BaseResponse MoveObjectController::handleRequest(const BaseRequest& request) {
+Response MoveObjectController::handleRequest(const Request& request) const {
     MoveObjectCommand command(
-        0, 1
-    );
+        request.GetParameterAsInt("id"),
+        request.GetParameterAsInt("units"));
 
     this->moveObjectService_->MoveObject(command);
 
-    BaseResponse response;
-    return response;
+    return Response(ResponseCode::kSuccess);
 }

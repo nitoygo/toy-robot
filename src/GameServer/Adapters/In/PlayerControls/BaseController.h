@@ -1,12 +1,13 @@
 #pragma once
 
-#include "BaseRequest.h"
-#include "BaseResponse.h"
+#include "Request.h"
+#include "Response.h"
 
 class BaseController {
 
 public:
     virtual ~BaseController() = default;
-    virtual BaseResponse handleRequest(const BaseRequest& request) = 0;
+
+    virtual Response handleRequest(const Request& request) const = 0;
 
 };

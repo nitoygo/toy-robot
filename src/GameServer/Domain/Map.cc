@@ -12,10 +12,8 @@ namespace MapHelper {
     }
 
     bool CoordinatesWithinRange(const Map& map, const Coordinates& coordinates) {
-        int index = GetIndexOf(map, coordinates);
-        int size = static_cast<int>(map.GetTotalArea());
-
-        return index < size;
+        return coordinates.x >= 0 && coordinates.x < map.GetWidth() &&
+            coordinates.y >= 0 && coordinates.y < map.GetHeight();
     }
 }
 

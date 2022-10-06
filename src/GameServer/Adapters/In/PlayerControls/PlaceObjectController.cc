@@ -4,16 +4,40 @@
 #include "Coordinates.h"
 #include "Orientation.h"
 
+#include "InvalidParametersException.h"
+
 #include <string>
 
 
-BaseResponse PlaceObjectController::handleRequest(const BaseRequest& request) {
+Coordinates GetCoordinatesFromRequest(const Request& request) {
+    try {
+        return Coordinates(
+            request.GetParameterAsInt("x"), 
+            request.GetParameterAsInt("y"));
+    } catch(const std::exception& e) {
+        std::cerr << "Input error: " << e.what() << '\n';
+        throw InvalidParametersException("Invalid x,y");
+    }
+}
+
+Orientation GetOrientationFromRequest(const Request& request) {
+    try {
+        return Orientation(request.GetParameter("f"));
+    } catch(const std::exception& e) {
+        std::cerr << "Input error: " << e.what() << '\n';
+        throw InvalidParametersException("Invalid f direction");
+    }
+}
+
+Response PlaceObjectController::handleRequest(const Request& request) const {
     PlaceObjectCommand command(
-        0, "table", Coordinates(1, 2), Orientation(Orientation::kEastFacing)
+        request.GetParameterAsInt("id"),
+        request.GetParameter("map"),
+        GetCoordinatesFromRequest(request),
+        GetOrientationFromRequest(request)
     );
 
     this->placeObjectService_->PlaceObject(command);
 
-    BaseResponse response;
-    return response;
+    return Response(ResponseCode::kSuccess);
 }

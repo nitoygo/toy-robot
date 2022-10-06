@@ -19,10 +19,10 @@ void RotateObjectService::RotateObject(const RotateObjectCommand& command) {
     std::unique_ptr<BaseObject> const& object = objectRepository_->LoadObject(command.id);
     Rotatable& rotatableObject = AsRotatableObject(object.get());
 
-    if (command.rotation == kLeftRotate) {
+    if (command.rotation == Rotation::kLeftRotate) {
         rotatableObject.RotateLeft();
     }
-    else if (command.rotation == kRightRotate) {
+    else if (command.rotation == Rotation::kRightRotate) {
         rotatableObject.RotateRight();
     }
 }

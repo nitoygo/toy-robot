@@ -76,18 +76,38 @@ int main(void)
     router.RegisterController("RIGHT", rotateObjectController);
     router.RegisterController("REPORT", getObjectPositionController);
 
-    BaseRequest placeRequest("PLACE");
-    BaseRequest moveRequest("MOVE");
-    BaseRequest leftRequest("LEFT");
-    BaseRequest rightRequest("RIGHT");
-    BaseRequest reportRequest("REPORT");
+    Request placeRequest("PLACE");
+    placeRequest.AddParameter("id", "0");
+    placeRequest.AddParameter("map", "table");
+    placeRequest.AddParameter("x", "0");
+    placeRequest.AddParameter("y", "0");
+    placeRequest.AddParameter("f", "NORTH");
 
-    router.Route(placeRequest);
-    router.Route(moveRequest);
-    router.Route(moveRequest);
-    router.Route(leftRequest);
-    router.Route(moveRequest);
-    router.Route(reportRequest);
+    Request moveRequest("MOVE");
+    moveRequest.AddParameter("id", "0");
+    moveRequest.AddParameter("units", "1");
+
+    Request leftRequest("LEFT");
+    leftRequest.AddParameter("id", "0");
+
+    Request rightRequest("RIGHT");
+    rightRequest.AddParameter("id", "0");
+
+    Request reportRequest("REPORT");
+    reportRequest.AddParameter("id", "0");
+
+    Response response;
+    response = router.Route(placeRequest);
+    response = router.Route(moveRequest);
+    response = router.Route(moveRequest);
+    response = router.Route(leftRequest);
+    response = router.Route(moveRequest);
+    response = router.Route(reportRequest);
+
+    std::cout << response.GetData("map") << "[" <<
+        response.GetData("x") << "," << 
+        response.GetData("y") << "], " <<
+        response.GetData("f") << "\n";
 
     return 0;
 }

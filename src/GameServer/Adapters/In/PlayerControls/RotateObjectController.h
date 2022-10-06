@@ -1,7 +1,6 @@
 #pragma once
 
 #include "BaseController.h"
-#include "RotateObjectRequest.h"
 #include "RotateObjectUseCase.h"
 
 #include <memory>
@@ -12,7 +11,7 @@ public:
     explicit RotateObjectController(std::unique_ptr<RotateObjectUseCase> &&rotateObjectService) : 
         rotateObjectService_(std::move(rotateObjectService)){}
 
-    BaseResponse handleRequest(const BaseRequest& request);
+    Response handleRequest(const Request& request) const ;
 
 private:
     std::unique_ptr<RotateObjectUseCase> rotateObjectService_;

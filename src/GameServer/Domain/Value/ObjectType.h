@@ -1,6 +1,6 @@
 #pragma once
 
-typedef enum {
+enum class ObjectType {
     kRobotObject,
     kUnknownObject
-} ObjectType;
+};

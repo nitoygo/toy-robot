@@ -1,7 +1,6 @@
 #pragma once
 
 #include "BaseController.h"
-#include "MoveObjectRequest.h"
 #include "MoveObjectUseCase.h"
 
 #include <memory>
@@ -12,7 +11,7 @@ public:
     explicit MoveObjectController(std::unique_ptr<MoveObjectUseCase> moveObjectService) 
         : moveObjectService_(std::move(moveObjectService)) {}
 
-    BaseResponse handleRequest(const BaseRequest& request) override;
+    Response handleRequest(const Request& request) const override;
 
 private:
     std::unique_ptr<MoveObjectUseCase> moveObjectService_;

@@ -13,7 +13,7 @@ public:
         std::unique_ptr<GetObjectPositionUseCase> getObjectPositionService
     ) : getObjectPositionService_(std::move(getObjectPositionService)) {}
 
-    BaseResponse handleRequest(const BaseRequest& request) override;
+    Response handleRequest(const Request& request) const override;
 
 private:
     std::unique_ptr<GetObjectPositionUseCase> getObjectPositionService_;

@@ -1,8 +1,8 @@
 #pragma once
 
 #include "BaseController.h"
-#include "BaseRequest.h"
-#include "BaseResponse.h"
+#include "Request.h"
+#include "Response.h"
 
 #include <memory>
 #include <unordered_map>
@@ -12,7 +12,7 @@
 class RequestRouter {
 
 public:
-    BaseResponse Route(BaseRequest requestParams);
+    Response Route(const Request& requestParams) const;
 
     void RegisterController(const std::string &requestName, 
         std::shared_ptr<BaseController> controller);

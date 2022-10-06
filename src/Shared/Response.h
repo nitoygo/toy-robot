@@ -2,14 +2,20 @@
 
 #include <string>
 #include <unordered_map>
-#include <initializer_list>
 
 
-class QueryResponse {
+enum class ResponseCode {
+    kSuccess = 0,
+    kGeneralError = -1,
+    kInvalidParameterError = -2
+};
 
+
+class Response
+{
 public:
-    explicit QueryResponse(std::initializer_list<std::pair<const std::string, std::string>> data) :
-        data_(data) {}
+    Response() = default;
+    Response(ResponseCode code) : code_(code) {}
 
     void AddData(std::initializer_list<std::pair<const std::string, std::string>> data) {
         data_.insert(data);
@@ -24,5 +30,6 @@ public:
     }
 
 protected:
+    ResponseCode code_;
     std::unordered_map<std::string, std::string> data_;
 };

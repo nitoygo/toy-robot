@@ -3,13 +3,29 @@
 #include "RotateObjectCommand.h"
 #include "Rotation.h"
 
-BaseResponse RotateObjectController::handleRequest(const BaseRequest& request) {
+#include "InvalidActionException.h"
+
+
+Rotation GetRotationFromRequest(const Request& request) {
+    if (request.GetName() == "LEFT") {
+        return Rotation::kLeftRotate;
+    }
+    else if (request.GetName() == "RIGHT") {
+        return Rotation::kRightRotate;
+    }
+    else {
+        throw InvalidActionException("Invalid rotation: " + request.GetName());
+    }
+}
+
+
+Response RotateObjectController::handleRequest(const Request& request) const {
     RotateObjectCommand command(
-        0,
-        kLeftRotate
+        request.GetParameterAsInt("id"),
+        GetRotationFromRequest(request)
     );
+
     rotateObjectService_->RotateObject(command);
 
-    BaseResponse response;
-    return response;
+    return Response(ResponseCode::kSuccess);
 }
