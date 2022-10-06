@@ -1,0 +1,39 @@
+name: Toy Robot C++ CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+  workflow_dispatch:
+
+jobs:
+  build-check:
+    name: Compile the project
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Build project
+      run: |
+        cd src
+        make
+
+  static-code-check:
+    name: Check for static code errors and warnings
+    runs-on: ubuntu-latest
+
+    steps:
+
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Run cppcheck
+      uses: deep5050/cppcheck-action@main
+
+    - name: Publish cppcheck report    
+      uses: mikeal/publish-to-github-action@master
