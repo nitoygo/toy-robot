@@ -1,83 +1,14 @@
-src/GameServer/Adapters/In/PlayerControls/RequestRouter.cc:11:46: style:inconclusive: Function 'Route' argument 1 names different: declaration 'requestParams' definition 'request'. [funcArgNamesDifferent]
-Response RequestRouter::Route(const Request& request) const {
-                                             ^
-src/GameServer/Adapters/In/PlayerControls/RequestRouter.h:15:35: note: Function 'Route' argument 1 names different: declaration 'requestParams' definition 'request'.
-    Response Route(const Request& requestParams) const;
-                                  ^
-src/GameServer/Adapters/In/PlayerControls/RequestRouter.cc:11:46: note: Function 'Route' argument 1 names different: declaration 'requestParams' definition 'request'.
-Response RequestRouter::Route(const Request& request) const {
-                                             ^
-src/GameServer/Adapters/In/PlayerControls/RotateObjectController.h:14:14: style: The function 'handleRequest' overrides a function in a base class but is not marked with a 'override' specifier. [missingOverride]
-    Response handleRequest(const Request& request) const ;
-             ^
-src/GameServer/Adapters/In/PlayerControls/BaseController.h:11:22: note: Virtual function in base class
-    virtual Response handleRequest(const Request& request) const = 0;
-                     ^
-src/GameServer/Adapters/In/PlayerControls/RotateObjectController.h:14:14: note: Function in derived class
-    Response handleRequest(const Request& request) const ;
-             ^
-src/GameServer/Core/Domain/Map.cc:64:5: style: Exception should be caught by reference. [catchExceptionByValue]
-    catch(std::out_of_range e) {
+src/GameServer/Core/Domain/BaseObject.h:12:5: style: Class 'BaseObject' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    BaseObject(int id) : id_(id) {}
     ^
-src/GameServer/Core/Domain/Map.cc:22:22: performance: Function parameter 'name' should be passed by const reference. [passedByValue]
-Map::Map(std::string name, int width, int height) :
-                     ^
-src/GameServer/Core/Domain/Value/Orientation.h:20:17: style:inconclusive: Technically the member function 'Orientation::GetValue' can be const. [functionConst]
-    std::string GetValue() { return value_; }
-                ^
+src/GameServer/Core/Domain/Robot.h:15:5: style: Class 'Robot' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
+    Robot(int id) : BaseObject(id) {}
+    ^
+src/GameServer/Core/Domain/Value/Orientation.h:20:24: style:inconclusive: Technically the member function 'Orientation::GetValue' can be const. [functionConst]
+    const std::string& GetValue() { return value_; }
+                       ^
 src/GameServer/Core/Domain/Value/Orientation.h:14:38: performance: Function parameter 'value' should be passed by const reference. [passedByValue]
     explicit Orientation(std::string value) : value_(value) {}
                                      ^
-src/GameServer/Core/Services/MoveObjectService.cc:51:81: style: Unsigned expression 'y-units' can't be negative so it is unnecessary to test it. [unsignedPositive]
-    else if (orientation.GetValue() == Orientation::kSouthFacing && (y - units) >= 0) {
-                                                                                ^
-src/GameServer/Core/Services/MoveObjectService.cc:54:80: style: Unsigned expression 'x-units' can't be negative so it is unnecessary to test it. [unsignedPositive]
-    else if (orientation.GetValue() == Orientation::kWestFacing && (x - units) >= 0) {
-                                                                               ^
-src/GameServer/DemoApplication.cc:101:14: style: Variable 'response' is reassigned a value before the old one has been used. [redundantAssignment]
-    response = router.Route(moveRequest);
-             ^
-src/GameServer/DemoApplication.cc:100:14: note: response is assigned
-    response = router.Route(placeRequest);
-             ^
-src/GameServer/DemoApplication.cc:101:14: note: response is overwritten
-    response = router.Route(moveRequest);
-             ^
-src/GameServer/DemoApplication.cc:102:14: style: Variable 'response' is reassigned a value before the old one has been used. [redundantAssignment]
-    response = router.Route(moveRequest);
-             ^
-src/GameServer/DemoApplication.cc:101:14: note: response is assigned
-    response = router.Route(moveRequest);
-             ^
-src/GameServer/DemoApplication.cc:102:14: note: response is overwritten
-    response = router.Route(moveRequest);
-             ^
-src/GameServer/DemoApplication.cc:103:14: style: Variable 'response' is reassigned a value before the old one has been used. [redundantAssignment]
-    response = router.Route(leftRequest);
-             ^
-src/GameServer/DemoApplication.cc:102:14: note: response is assigned
-    response = router.Route(moveRequest);
-             ^
-src/GameServer/DemoApplication.cc:103:14: note: response is overwritten
-    response = router.Route(leftRequest);
-             ^
-src/GameServer/DemoApplication.cc:104:14: style: Variable 'response' is reassigned a value before the old one has been used. [redundantAssignment]
-    response = router.Route(moveRequest);
-             ^
-src/GameServer/DemoApplication.cc:103:14: note: response is assigned
-    response = router.Route(leftRequest);
-             ^
-src/GameServer/DemoApplication.cc:104:14: note: response is overwritten
-    response = router.Route(moveRequest);
-             ^
-src/GameServer/DemoApplication.cc:105:14: style: Variable 'response' is reassigned a value before the old one has been used. [redundantAssignment]
-    response = router.Route(reportRequest);
-             ^
-src/GameServer/DemoApplication.cc:104:14: note: response is assigned
-    response = router.Route(moveRequest);
-             ^
-src/GameServer/DemoApplication.cc:105:14: note: response is overwritten
-    response = router.Route(reportRequest);
-             ^
 nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
 
