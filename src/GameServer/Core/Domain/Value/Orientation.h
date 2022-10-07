@@ -11,13 +11,13 @@ public:
     static const std::string kSouthFacing;
 
     Orientation() = default;
-    explicit Orientation(std::string value) : value_(value) {}
+    explicit Orientation(const std::string& value) : value_(value) {}
 
     void RotateLeft();
 
     void RotateRight();
 
-    const std::string& GetValue() { return value_; }
+    const std::string& GetValue() const { return value_; }
 
 private:
     std::string value_;

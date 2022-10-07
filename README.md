@@ -15,7 +15,8 @@ with extensibility in mind, using an opinionated approach of implementing a C++ 
     Contains the domain entities such as `Robot` and `Table`  
     which are accessed by the use cases.  
     * [Services](src/GameServer/Core/Services)  
-    Contains the implementation of the core use cases as services such as for moving the `Robot` in the `Table`.  
+    Contains the implementation of the core use cases as services such as 
+    for moving the `Robot` in the `Table`.  
     * [Ports](src/GameServer/Core/Ports)  
     Contains definition of ports that allow communication between the core and adapters.  
   * [Adapters](src/GameServer/Adapters)  
@@ -40,6 +41,13 @@ $ make
 The output executable is in `build/` directory and can be run as follows:
 ```
 $ ./build/ToyRobotDemo
+PLACE 1,2,EAST
+MOVE
+MOVE
+LEFT
+MOVE
+REPORT
+Output: 3,3,NORTH
 ```
 
 ## Roadmap

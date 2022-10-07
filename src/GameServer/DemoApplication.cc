@@ -102,7 +102,6 @@ void RunDemoClient(const ApplicationContext& appContext) {
         }
 
         try {
-            std::cout << request.GetName() << "\n";
             // send request to input adapter
             Response response = requestRouter->Route(request);
 
