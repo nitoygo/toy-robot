@@ -1,14 +1,2 @@
-src/GameServer/Core/Domain/BaseObject.h:12:5: style: Class 'BaseObject' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
-    BaseObject(int id) : id_(id) {}
-    ^
-src/GameServer/Core/Domain/Robot.h:15:5: style: Class 'Robot' has a constructor with 1 argument that is not explicit. [noExplicitConstructor]
-    Robot(int id) : BaseObject(id) {}
-    ^
-src/GameServer/Core/Domain/Value/Orientation.h:20:24: style:inconclusive: Technically the member function 'Orientation::GetValue' can be const. [functionConst]
-    const std::string& GetValue() { return value_; }
-                       ^
-src/GameServer/Core/Domain/Value/Orientation.h:14:38: performance: Function parameter 'value' should be passed by const reference. [passedByValue]
-    explicit Orientation(std::string value) : value_(value) {}
-                                     ^
 nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
 
