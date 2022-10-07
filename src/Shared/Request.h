@@ -9,11 +9,17 @@ public:
     Request() = default;
     Request(std::string name) : name_(name) {}
 
-    void SetName(std::string name) {
+    std::string GetName() const { return name_; }
+
+    Request& WithName(std::string name) {
         name_ = name;
+        return *this;
     }
 
-    std::string GetName() const { return name_; }
+    Request& WithParameter(std::string key, const std::string &value) {
+        parameters_[key] = value;
+        return *this;
+    }
 
     void AddParameter(std::string key, const std::string &value) {
         parameters_[key] = value;

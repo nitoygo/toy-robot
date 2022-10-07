@@ -9,7 +9,7 @@
 class Map
 {
 public:
-    explicit Map(std::string name, int width, int height);
+    explicit Map(const std::string& name, int width, int height);
 
     virtual ~Map() = default;
 

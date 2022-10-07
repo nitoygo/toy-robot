@@ -8,12 +8,11 @@ Response GetObjectPositionController::handleRequest(const Request& request) cons
 
     QueryResponse queryResponse = this->getObjectPositionService_->GetObjectPosition(objectId);
 
-    Response response(ResponseCode::kSuccess);
-
-    response.AddData("map", queryResponse.GetData("map"));
-    response.AddData("x", queryResponse.GetData("x"));
-    response.AddData("y", queryResponse.GetData("y"));
-    response.AddData("f", queryResponse.GetData("f"));
+    Response response = Response(ResponseCode::kSuccess)
+        .WithData("map", queryResponse.GetData("map"))
+        .WithData("x", queryResponse.GetData("x"))
+        .WithData("y", queryResponse.GetData("y"))
+        .WithData("f", queryResponse.GetData("f"));
 
     return response;
 }

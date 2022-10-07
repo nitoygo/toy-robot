@@ -39,8 +39,8 @@ Coordinates GetMoveCoordinates(std::unique_ptr<BaseObject> const& object, int un
     Coordinates current = object->GetCoordinates();
     Orientation orientation = object->GetOrientation();
 
-    unsigned int x = current.x;
-    unsigned int y = current.y;
+    int x = current.x;
+    int y = current.y;
 
     if (orientation.GetValue() == Orientation::kNorthFacing) {
         y += units;

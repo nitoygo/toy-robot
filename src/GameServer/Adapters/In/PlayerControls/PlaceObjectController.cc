@@ -15,7 +15,6 @@ Coordinates GetCoordinatesFromRequest(const Request& request) {
             request.GetParameterAsInt("x"), 
             request.GetParameterAsInt("y"));
     } catch(const std::exception& e) {
-        std::cerr << "Input error: " << e.what() << '\n';
         throw InvalidParametersException("Invalid x,y");
     }
 }
@@ -24,7 +23,6 @@ Orientation GetOrientationFromRequest(const Request& request) {
     try {
         return Orientation(request.GetParameter("f"));
     } catch(const std::exception& e) {
-        std::cerr << "Input error: " << e.what() << '\n';
         throw InvalidParametersException("Invalid f direction");
     }
 }

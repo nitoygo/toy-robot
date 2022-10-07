@@ -9,6 +9,7 @@ class BaseObject
 {
 public:
     BaseObject() = default;
+    BaseObject(int id) : id_(id) {}
     BaseObject(int id, const Coordinates& coordinates, const Orientation& orientation)
         : id_(id), coordinates_(coordinates), orientation_(orientation) {}
 

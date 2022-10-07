@@ -11,7 +11,7 @@ public:
     explicit RotateObjectController(std::unique_ptr<RotateObjectUseCase> &&rotateObjectService) : 
         rotateObjectService_(std::move(rotateObjectService)){}
 
-    Response handleRequest(const Request& request) const ;
+    Response handleRequest(const Request& request) const override;
 
 private:
     std::unique_ptr<RotateObjectUseCase> rotateObjectService_;

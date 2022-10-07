@@ -20,7 +20,7 @@ INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
 # The -MMD and -MP flags together generate Makefiles for us!
 # These files will have .d instead of .o as the output.
-CPPFLAGS := $(INC_FLAGS) -MMD -MP -std=c++14
+CPPFLAGS := $(INC_FLAGS) -MMD -MP -std=c++2a
 CXXFLAGS := -g -Wall
 
 # The final build step.

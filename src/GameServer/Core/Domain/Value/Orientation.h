@@ -17,7 +17,7 @@ public:
 
     void RotateRight();
 
-    std::string GetValue() { return value_; }
+    const std::string& GetValue() { return value_; }
 
 private:
     std::string value_;

@@ -4,6 +4,13 @@
 #include <unordered_map>
 
 
+template <typename Enumeration>
+auto ResponseCodeAsInteger(Enumeration const value)
+    -> typename std::underlying_type<Enumeration>::type
+{
+    return static_cast<typename std::underlying_type<Enumeration>::type>(value);
+}
+
 enum class ResponseCode {
     kSuccess = 0,
     kGeneralError = -1,
@@ -17,16 +24,25 @@ public:
     Response() = default;
     Response(ResponseCode code) : code_(code) {}
 
-    void AddData(std::initializer_list<std::pair<const std::string, std::string>> data) {
-        data_.insert(data);
+    Response& WithData(std::string key, const std::string &value) {
+        data_[key] = value;
+        return *this;
     }
 
     void AddData(std::string key, const std::string &value) {
         data_[key] = value;
     }
 
+    void AddData(std::initializer_list<std::pair<const std::string, std::string>> data) {
+        data_.insert(data);
+    }
+
     const std::string& GetData(std::string key) const {
         return data_.at(key);
+    }
+
+    ResponseCode GetCode() {
+        return code_;
     }
 
 protected:

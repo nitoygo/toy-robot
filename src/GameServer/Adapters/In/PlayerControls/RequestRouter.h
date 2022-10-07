@@ -12,7 +12,7 @@
 class RequestRouter {
 
 public:
-    Response Route(const Request& requestParams) const;
+    Response Route(const Request& request) const;
 
     void RegisterController(const std::string &requestName, 
         std::shared_ptr<BaseController> controller);

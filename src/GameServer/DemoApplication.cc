@@ -1,113 +1,128 @@
+#include "ApplicationContext.h"
+
 #include "RequestRouter.h"
-
-#include "PlaceObjectController.h"
-#include "MoveObjectController.h"
-#include "RotateObjectController.h"
-#include "GetObjectPositionController.h"
-
-#include "MoveObjectService.h"
-#include "PlaceObjectService.h"
-#include "RotateObjectService.h"
-#include "GetObjectPositionService.h"
-
 #include "ObjectRepository.h"
-#include "ObjectPersistenceAdapter.h"
 #include "MapRepository.h"
-#include "MapPersistenceAdapter.h"
+
+#include "BaseObject.h"
 #include "Robot.h"
+#include "Map.h"
 
 #include <iostream>
+#include <sstream>
+#include <string>
 #include <memory>
 
-int main(void)
-{
-    // initialize persistence layer
-    std::shared_ptr<MapRepository> mapRepository(
-        std::make_shared<MapPersistenceAdapter>()
-    );
-    std::shared_ptr<ObjectRepository> objectRepository(
-        std::make_shared<ObjectPersistenceAdapter>()
-    );
 
-    // prepare and store table play area
-    std::unique_ptr<Map> table(
-        std::make_unique<Map>("table", 5, 5)
-    );
+#define DEMO_ROBOT_ID                (0)
+#define DEMO_ROBOT_ID_STR            "0"
+#define DEMO_ROBOT_MOVE_DISTANCE_STR "1"
+#define DEMO_MAP_NAME                "Table"
+#define DEMO_MAP_WIDTH               (5)
+#define DEMO_MAP_HEIGHT              (5)
+
+
+void RunDemoClient(const ApplicationContext& appContext);
+
+
+int main()
+{
+    ApplicationContext appContext;
+    appContext.initialize();
+
+    std::shared_ptr<MapRepository> mapRepository = appContext.GetMapRepository();
+    std::shared_ptr<ObjectRepository> objectRepository = appContext.GetObjectRepository();
+
+    // prepare and store table as a map with an area of 5x5 units
+    std::unique_ptr<Map> table(std::make_unique<Map>(
+        DEMO_MAP_NAME, 
+        DEMO_MAP_WIDTH, 
+        DEMO_MAP_HEIGHT));
     mapRepository->StoreMap(table);
 
     // prepare and store toy robot object
-    std::unique_ptr<BaseObject> toyRobot(
-        std::make_unique<Robot>()
-    );
+    std::unique_ptr<BaseObject> toyRobot(std::make_unique<Robot>(
+        DEMO_ROBOT_ID));
     objectRepository->StoreObject(toyRobot);
 
-    // initialize services
-    std::unique_ptr<PlaceObjectUseCase> placeObjectService(
-        std::make_unique<PlaceObjectService>(objectRepository, mapRepository)
-    );
-    std::unique_ptr<MoveObjectUseCase> moveObjectService(
-        std::make_unique<MoveObjectService>(objectRepository, mapRepository)
-    );
-    std::unique_ptr<RotateObjectUseCase> rotateObjectService(
-        std::make_unique<RotateObjectService>(objectRepository)
-    );
-    std::unique_ptr<GetObjectPositionUseCase> getObjectPositionService(
-        std::make_unique<GetObjectPositionService>(objectRepository)
-    );
-
-    // register player action request handlers
-    std::shared_ptr<PlaceObjectController> placeObjectController(
-        std::make_shared<PlaceObjectController>(std::move(placeObjectService))
-    );
-    std::shared_ptr<MoveObjectController> moveObjectController(
-        std::make_shared<MoveObjectController>(std::move(moveObjectService))
-    );
-    std::shared_ptr<RotateObjectController> rotateObjectController(
-        std::make_shared<RotateObjectController>(std::move(rotateObjectService))
-    );
-    std::shared_ptr<GetObjectPositionController> getObjectPositionController(
-        std::make_shared<GetObjectPositionController>(std::move(getObjectPositionService))
-    );
-
-    RequestRouter router;
-    router.RegisterController("PLACE", placeObjectController);
-    router.RegisterController("MOVE", moveObjectController);
-    router.RegisterController("LEFT", rotateObjectController);
-    router.RegisterController("RIGHT", rotateObjectController);
-    router.RegisterController("REPORT", getObjectPositionController);
-
-    Request placeRequest("PLACE");
-    placeRequest.AddParameter("id", "0");
-    placeRequest.AddParameter("map", "table");
-    placeRequest.AddParameter("x", "0");
-    placeRequest.AddParameter("y", "0");
-    placeRequest.AddParameter("f", "NORTH");
-
-    Request moveRequest("MOVE");
-    moveRequest.AddParameter("id", "0");
-    moveRequest.AddParameter("units", "1");
-
-    Request leftRequest("LEFT");
-    leftRequest.AddParameter("id", "0");
-
-    Request rightRequest("RIGHT");
-    rightRequest.AddParameter("id", "0");
-
-    Request reportRequest("REPORT");
-    reportRequest.AddParameter("id", "0");
-
-    Response response;
-    response = router.Route(placeRequest);
-    response = router.Route(moveRequest);
-    response = router.Route(moveRequest);
-    response = router.Route(leftRequest);
-    response = router.Route(moveRequest);
-    response = router.Route(reportRequest);
-
-    std::cout << response.GetData("map") << "[" <<
-        response.GetData("x") << "," << 
-        response.GetData("y") << "], " <<
-        response.GetData("f") << "\n";
+    // start listening for commands
+    RunDemoClient(appContext);
 
     return 0;
+}
+
+void RunDemoClient(const ApplicationContext& appContext) {
+    std::shared_ptr<RequestRouter> requestRouter = appContext.GetRequestRouter();
+
+    Request request;
+
+    while (1) {
+        std::string requestName;
+        std::string inputRequest;
+        std::getline(std::cin >> std::ws, inputRequest);
+
+        if (inputRequest.starts_with("PLACE")) {
+            std::string requestParams, x, y, direction;
+
+            std::stringstream requestStream(inputRequest);
+            std::getline(requestStream, requestName, ' ');
+            std::getline(requestStream, requestParams, ' ');
+
+            std::stringstream paramStream(requestParams);
+            std::getline(paramStream, x, ',');
+            std::getline(paramStream, y, ',');
+            std::getline(paramStream, direction, ',');
+
+            request = Request("PLACE")
+                .WithParameter("id", DEMO_ROBOT_ID_STR)
+                .WithParameter("map", DEMO_MAP_NAME)
+                .WithParameter("x", x)
+                .WithParameter("y", y)
+                .WithParameter("f", direction);
+        }
+        else if (inputRequest.starts_with("MOVE")) {
+            request = Request("MOVE")
+                .WithParameter("id", DEMO_ROBOT_ID_STR)
+                .WithParameter("units", DEMO_ROBOT_MOVE_DISTANCE_STR);
+        }
+        else if (inputRequest.starts_with("LEFT")) { 
+            request = Request("LEFT")
+                .WithParameter("id", DEMO_ROBOT_ID_STR);
+        }
+        else if (inputRequest.starts_with("RIGHT")) { 
+            request = Request("RIGHT")
+                .WithParameter("id", DEMO_ROBOT_ID_STR);
+        }
+        else if (inputRequest.starts_with("REPORT")) { 
+            request = Request("REPORT")
+                .WithParameter("id", DEMO_ROBOT_ID_STR);
+        }
+        else if (inputRequest.starts_with("QUIT")) {
+            break;
+        }
+
+        try {
+            std::cout << request.GetName() << "\n";
+            // send request to input adapter
+            Response response = requestRouter->Route(request);
+
+            // handle response
+            if (response.GetCode() == ResponseCode::kSuccess) {
+                if (request.GetName() == "REPORT") {
+                    std::cout << "Output: " <<
+                    response.GetData("x") << "," << 
+                    response.GetData("y") << "," <<
+                    response.GetData("f") << "\n"; 
+                }
+            }
+            else {
+                // uncomment and recompile to see error codes
+                // std::cout << static_cast<std::underlying_type<ResponseCode>::type>(response.GetCode()) << "\n";
+            }
+        }
+        catch(const std::exception& e) {
+            // uncomment and recompile to see exceptions
+            // std::cout << "Exception: " << e.what() << "\n";
+        }
+    }
 }

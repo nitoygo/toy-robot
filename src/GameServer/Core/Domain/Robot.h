@@ -12,6 +12,8 @@ class Robot : public BaseObject,
     public Rotatable
 {
 public:
+    Robot(int id) : BaseObject(id) {}
+
     void Place(
         const std::string& mapName, 
         const Coordinates& coordinates, 

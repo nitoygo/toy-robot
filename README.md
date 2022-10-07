@@ -4,7 +4,9 @@ This project aims to solve and provide a demo application for [Toy Robot Code Ch
 
 ## Project Structure
 
-This project is structured using an opinionated approach of implementing a C++ application using the [Hexagonal Architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)) (or Ports and Adapters pattern)
+This code challenge can be interpreted as a client-server game. As such, the project was structured  
+with extensibility in mind, using an opinionated approach of implementing a C++ application using the  
+[Hexagonal Architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)) (or Ports and Adapters pattern)
 
 [Source](src/)  
 * [GameServer](src/GameServer)  
@@ -13,8 +15,7 @@ This project is structured using an opinionated approach of implementing a C++ a
     Contains the domain entities such as `Robot` and `Table`  
     which are accessed by the use cases.  
     * [Services](src/GameServer/Core/Services)  
-    Contains the implementation of the core application's use cases  
-    such as moving the `Robot` in the `Table`.  
+    Contains the implementation of the core use cases as services such as for moving the `Robot` in the `Table`.  
     * [Ports](src/GameServer/Core/Ports)  
     Contains definition of ports that allow communication between the core and adapters.  
   * [Adapters](src/GameServer/Adapters)  
@@ -44,9 +45,10 @@ $ ./build/ToyRobotDemo
 ## Roadmap
 
 - [x] Implement core features
-- [x] Implement incoming and outgoing adapters for demo app
-- [ ] Implement tests
-- [x] Implement ci/cd scripts 
+- [x] Implement incoming and outgoing adapters
+- [x] Implement demo console application
+- [ ] Implement unit tests
+- [x] Implement ci/cd scripts
 
 Future Plans
 - [ ] Implement incoming adapters for admin controls

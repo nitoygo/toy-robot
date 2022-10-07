@@ -19,7 +19,7 @@ namespace MapHelper {
 }
 
 
-Map::Map(std::string name, int width, int height) : 
+Map::Map(const std::string& name, int width, int height) : 
     name_(name), 
     width_(width), 
     height_(height), 
@@ -61,7 +61,7 @@ int Map::GetObjectAt(const Coordinates& coordinates) {
         int index = MapHelper::GetIndexOf(*this, coordinates);
         return this->area_.at(index);
     }
-    catch(std::out_of_range e) {
+    catch(const std::out_of_range& e) {
         throw InvalidCoordinatesException(
             "x=" + std::to_string(coordinates.x) + ", y=" + std::to_string(coordinates.y));
     }

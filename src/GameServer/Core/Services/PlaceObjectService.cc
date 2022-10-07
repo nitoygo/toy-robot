@@ -36,5 +36,4 @@ void PlaceObjectService::PlaceObject(const PlaceObjectCommand& command) {
             "x=" + std::to_string(command.coordinates.x) + ", " +
             "y=" + std::to_string(command.coordinates.y));
     }
-
 }
