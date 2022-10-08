@@ -40,7 +40,7 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN}}
         std: c++20
-        output_file: ./test/static/report/cppcheck_report.txt
+        output_file: ./reports/static/cppcheck_report.txt
 
     - name: Publish cppcheck report    
       uses: mikeal/publish-to-github-action@master

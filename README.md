@@ -31,7 +31,7 @@ The following shows how the project was organized, taking inspiration from the
 Wires the components together to run a game server instance  
 and provides a console application to simulate how a client might interact with the server.  
 
-To illustrate the architecture, here is an example of the communication flow:  
+To illustrate how the architecture was applied, here is an example of the communication flow:  
 ***  
 ![](./docs/images/communication-flow.svg)  
 <p align="center">
