@@ -1,0 +1,31 @@
+@startuml
+
+package Core.Ports.In {
+  Interface MoveObjectUseCase
+}
+
+package Core.Ports.Out {
+  Interface ObjectRepository
+}
+
+package Core.Domain {
+  class Object
+}
+
+package Adapters.In.PlayerControls {
+  MoveObjectController -right-> MoveObjectUseCase
+  MoveObjectController -down-> MoveObjectCommand
+}
+
+package Adapters.Out.Persistence {
+  ObjectPersistenceAdapter -left-|> ObjectRepository
+}
+
+package Core.Services {
+  class MoveObjectService
+  MoveObjectService -up-|> MoveObjectUseCase
+  MoveObjectService -right-> ObjectRepository
+  MoveObjectService -down-> Object
+}
+
+@enduml

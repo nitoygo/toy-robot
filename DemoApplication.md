@@ -20,5 +20,5 @@ The first command to the robot must be a PLACE command. After that,
 any sequence of commands may be issued, in any order, including another PLACE command.
 
 Note: To exit the demo application, press Ctrl+C / CMD+C or type:
-* QUIT
+* QUIT  
 Breaks from the terminal input loop

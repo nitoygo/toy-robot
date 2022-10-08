@@ -1,8 +1,11 @@
-name: Toy Robot C++ CI
+name: Toy Robot Source Update CI
 
 on:
   push:
     branches: [ main ]
+    paths:
+      - src/**
+      - test/**
   pull_request:
     branches: [ main ]
 
