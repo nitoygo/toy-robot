@@ -30,7 +30,7 @@ jobs:
       run: |
         sudo apt-get update
         sudo apt install -y cpputest
-        cd ../test
+        cd test
         make
 
   static-code-check:
