@@ -10,7 +10,8 @@ public:
     static const std::string kWestFacing;
     static const std::string kSouthFacing;
 
-    Orientation() = default;
+    Orientation() : value_(kNorthFacing) {}
+
     explicit Orientation(const std::string& value) : value_(value) {}
 
     void RotateLeft();

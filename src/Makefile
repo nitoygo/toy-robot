@@ -1,24 +1,18 @@
 TARGET_EXEC := ToyRobotDemo
 
 BUILD_DIR := ./build
-SRC_DIRS := .
+SRC_DIR := .
 
-# Find all C and C++ files
-SRCS := $(shell find $(SRC_DIRS) -name '*.cc')
-
-# String substitution for every C++ file.
+SRCS := $(shell find $(SRC_DIR) -name '*.cc')
 OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
 
-# String substitution (suffix version without %).
 DEPS := $(OBJS:.o=.d)
 
-# Every folder in ./src will need to be passed to GCC so that it can find header files
-INC_DIRS := $(shell find $(SRC_DIRS) -type d)
-
-# Add a prefix to INC_DIRS. So moduleA would become -ImoduleA. GCC understands this -I flag
+INC_DIRS := $(shell find $(SRC_DIR) -type d)
+INC_DIRS += ../include
 INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-# The -MMD and -MP flags together generate Makefiles for us!
+# The -MMD and -MP flags together generate Makefiles for us
 # These files will have .d instead of .o as the output.
 CPPFLAGS := $(INC_FLAGS) -MMD -MP -std=c++2a
 CXXFLAGS := -g -Wall

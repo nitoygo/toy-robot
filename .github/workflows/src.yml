@@ -12,8 +12,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-check:
-    name: Compile the project
+  build-and-unittest:
+    name: Compile and run unit tests
     runs-on: ubuntu-latest
 
     steps:
@@ -24,6 +24,13 @@ jobs:
     - name: Build project
       run: |
         cd src
+        make
+
+    - name: Run tests
+      run: |
+        sudo apt-get update
+        sudo apt install -y cpputest
+        cd ../test
         make
 
   static-code-check:
