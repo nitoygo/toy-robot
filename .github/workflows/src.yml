@@ -28,7 +28,7 @@ jobs:
 
     - name: Run tests
       run: |
-        sudo apt install -y cpputest=4.0
+        sudo apt install -y cpputest
         cd test
         make
 

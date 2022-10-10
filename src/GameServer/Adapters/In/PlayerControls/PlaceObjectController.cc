@@ -28,12 +28,12 @@ Orientation GetOrientationFromRequest(const Request& request) {
 }
 
 Response PlaceObjectController::handleRequest(const Request& request) const {
-    PlaceObjectCommand command(
-        request.GetParameterAsInt("id"),
-        request.GetParameter("map"),
-        GetCoordinatesFromRequest(request),
-        GetOrientationFromRequest(request)
-    );
+    int objectId = request.GetParameterAsInt("id");
+    std::string mapName = request.GetParameter("map");
+    Coordinates coordinates = GetCoordinatesFromRequest(request);
+    Orientation orientation = GetOrientationFromRequest(request);
+
+    PlaceObjectCommand command(objectId, mapName, coordinates, orientation);
 
     this->placeObjectService_->PlaceObject(command);
 

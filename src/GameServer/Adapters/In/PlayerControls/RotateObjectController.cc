@@ -20,10 +20,10 @@ Rotation GetRotationFromRequest(const Request& request) {
 
 
 Response RotateObjectController::handleRequest(const Request& request) const {
-    RotateObjectCommand command(
-        request.GetParameterAsInt("id"),
-        GetRotationFromRequest(request)
-    );
+    int objectId = request.GetParameterAsInt("id");
+    Rotation rotateDirection = GetRotationFromRequest(request);
+
+    RotateObjectCommand command(objectId, rotateDirection);
 
     rotateObjectService_->RotateObject(command);
 

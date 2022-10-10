@@ -7,9 +7,10 @@
 
 
 Response MoveObjectController::handleRequest(const Request& request) const {
-    MoveObjectCommand command(
-        request.GetParameterAsInt("id"),
-        request.GetParameterAsInt("units"));
+    int objectId = request.GetParameterAsInt("id");
+    int moveDistance = request.GetParameterAsInt("units");
+
+    MoveObjectCommand command(objectId, moveDistance);
 
     this->moveObjectService_->MoveObject(command);
 
