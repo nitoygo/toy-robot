@@ -11,14 +11,14 @@ This code challenge can be interpreted as a client-server game - with focus on t
 The project was structured with extensibility in mind allowing future features (such as networking)  
 and use cases to be implemented with less changes to the domain logic. 
 
-The following shows how the project was organized, taking inspiration from the
+The following shows how the project was organized, inspired by the 
 [Hexagonal Architecture](https://en.wikipedia.org/wiki/Hexagonal_architecture_(software)) (Ports and Adapters)
 
 [Source](src/)  
 * [GameServer](src/GameServer)  
   * [Core](src/GameServer/Core)  
     * [Domain](src/GameServer/Core/Domain)  
-    Contains the domain entities such as `Robot`(`Object`) and `Map` (in this case, a Table)  
+    Contains the domain entities such as `Robot`(`Object`) and `Map` (Table)  
     which are accessed by the use cases.  
     * [Services](src/GameServer/Core/Services)  
     Contains the implementation of the core use cases as services like  
@@ -38,7 +38,7 @@ To illustrate how the architecture was applied, here is an example of the commun
 ***  
 ![](./docs/images/communication-flow.svg)  
 <p align="center">
-Figure 1 - The controller calls an incoming port, which is implemented by a service.  
+Figure 1 - The controller calls an incoming port (via command), which is implemented by a service.  
 The service calls an outgoing port, which is implemented by an adapter.  
 Within the service, an entity is manipulated to perform a use case.  
 </p>  
@@ -55,7 +55,7 @@ Please have a look at the [quick start guide](QuickStart.md).
 - [x] Implement core features
 - [x] Implement incoming and outgoing adapters
 - [x] Implement demo console application
-- [ ] Implement unit tests
+- [x] Implement unit tests
 - [x] Implement ci/cd scripts
 
 Future Plans

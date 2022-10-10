@@ -63,7 +63,6 @@ TEST(GetObjectPositionServiceTest, ThrowsWhenObjectHasNoCurrentMap)
 
 TEST(GetObjectPositionServiceTest, ThrowsWhenObjectIsNotMovable)
 {
-
     std::shared_ptr<ObjectRepository> objectRepo = std::make_shared<MockObjectRepository>();
     GetObjectPositionService service(objectRepo);
 

@@ -1,4 +1,4 @@
-name: Toy Robot Docs Update CI 
+name: PlantUML Diagrams
 
 on:
   push:

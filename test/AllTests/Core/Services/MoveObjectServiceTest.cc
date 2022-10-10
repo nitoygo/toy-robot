@@ -75,8 +75,8 @@ TEST(MoveObjectServiceTest, MoveUpdatesObjectCoordinatesWhenInsideBounds)
     MoveObjectCommand command(0, 1);
     service.MoveObject(command);
 
-    std::unique_ptr<BaseObject> const& latestRobot = objectRepo->LoadObject(0);
-    CHECK_TRUE(latestRobot->GetCoordinates() != prevCoordinates);
+    std::unique_ptr<BaseObject> const& persistedRobot = objectRepo->LoadObject(0);
+    CHECK_TRUE(persistedRobot->GetCoordinates() != prevCoordinates);
 }
 
 TEST(MoveObjectServiceTest, MoveDoNotUpdatesObjectCoordinatesWhenOutOfBounds)
@@ -86,8 +86,8 @@ TEST(MoveObjectServiceTest, MoveDoNotUpdatesObjectCoordinatesWhenOutOfBounds)
     std::shared_ptr<ObjectRepository> objectRepo = std::make_shared<MockObjectRepository>();
     std::unique_ptr<BaseObject> robot(
         std::make_unique<Robot>(0, 
-        prevCoordinates, 
-        Orientation(Orientation::kWestFacing)));
+            prevCoordinates, 
+            Orientation(Orientation::kWestFacing)));
     robot->SetCurrentMapName("Table");
     objectRepo->StoreObject(robot);
 
@@ -95,30 +95,30 @@ TEST(MoveObjectServiceTest, MoveDoNotUpdatesObjectCoordinatesWhenOutOfBounds)
     std::unique_ptr<Map> table(std::make_unique<Map>("Table", 5, 5));
     mapRepo->StoreMap(table);
 
-    std::unique_ptr<BaseObject> const& latestRobot = objectRepo->LoadObject(0);
+    std::unique_ptr<BaseObject> const& persistedRobot = objectRepo->LoadObject(0);
 
     MoveObjectService service(objectRepo, mapRepo);
 
     MoveObjectCommand command(0, 1);
     service.MoveObject(command);
-    CHECK_TRUE(latestRobot->GetCoordinates() == prevCoordinates); // assert did not move
+    CHECK_TRUE(persistedRobot->GetCoordinates() == prevCoordinates); // assert did not move
 
-    latestRobot->SetOrientation(Orientation(Orientation::kSouthFacing));
+    persistedRobot->SetOrientation(Orientation(Orientation::kSouthFacing));
     service.MoveObject(command);
-    CHECK_TRUE(latestRobot->GetCoordinates() == prevCoordinates); // assert did not move
+    CHECK_TRUE(persistedRobot->GetCoordinates() == prevCoordinates); // assert did not move
 
     prevCoordinates = Coordinates(4,4);
-    latestRobot->SetCoordinates(prevCoordinates);
-    latestRobot->SetOrientation(Orientation(Orientation::kNorthFacing));
+    persistedRobot->SetCoordinates(prevCoordinates);
+    persistedRobot->SetOrientation(Orientation(Orientation::kNorthFacing));
     service.MoveObject(command);
-    CHECK_TRUE(latestRobot->GetCoordinates() == prevCoordinates); // assert did not move
+    CHECK_TRUE(persistedRobot->GetCoordinates() == prevCoordinates); // assert did not move
 
-    latestRobot->SetOrientation(Orientation(Orientation::kEastFacing));
+    persistedRobot->SetOrientation(Orientation(Orientation::kEastFacing));
     service.MoveObject(command);
-    CHECK_TRUE(latestRobot->GetCoordinates() == prevCoordinates); // assert did not move
+    CHECK_TRUE(persistedRobot->GetCoordinates() == prevCoordinates); // assert did not move
 }
 
-TEST(MoveObjectServiceTest, ThrowsWhenObjectHasNoCurrentMap)
+TEST(MoveObjectServiceTest, ThrowsWhenObjectIsImmovable)
 {
     std::shared_ptr<ObjectRepository> objectRepo = std::make_shared<MockObjectRepository>();
     std::shared_ptr<MapRepository> mapRepo = std::make_shared<MockMapRepository>();
@@ -133,4 +133,20 @@ TEST(MoveObjectServiceTest, ThrowsWhenObjectHasNoCurrentMap)
 
     MoveObjectCommand command(0, 1);
     CHECK_THROWS(InvalidActionException, service.MoveObject(command));
+}
+
+TEST(MoveObjectServiceTest, ThrowsWhenObjectHasNoCurrentMap)
+{
+    std::shared_ptr<ObjectRepository> objectRepo = std::make_shared<MockObjectRepository>();
+    std::shared_ptr<MapRepository> mapRepo = std::make_shared<MockMapRepository>();
+    MoveObjectService service(objectRepo, mapRepo);
+
+    std::unique_ptr<BaseObject> robot(
+        std::make_unique<Robot>(0, 
+            Coordinates(0,0), 
+            Orientation(Orientation::kNorthFacing)));
+    objectRepo->StoreObject(robot);
+
+    MoveObjectCommand command(0, 1);
+    CHECK_THROWS(InvalidStateException, service.MoveObject(command));
 }

@@ -1,4 +1,4 @@
-name: Toy Robot Source Update CI
+name: Source Code Build and Tests
 
 on:
   push:
@@ -62,6 +62,7 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN}}
         std: c++20
+        exclude_check: test
         output_file: ./reports/static/cppcheck_report.txt
 
     - name: Update cppcheck report

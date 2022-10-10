@@ -19,7 +19,7 @@ public:
     
     void SetId(int id) { id_ = id; }
 
-    void SetCurrentMapName(std::string mapName) { currentMapName_ = mapName; }
+    void SetCurrentMapName(const std::string& mapName) { currentMapName_ = mapName; }
 
     void SetCoordinates(Coordinates coordinates) { coordinates_ = coordinates; }
 
