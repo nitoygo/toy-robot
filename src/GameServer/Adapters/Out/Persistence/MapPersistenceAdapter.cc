@@ -3,6 +3,8 @@
 #include <iostream>
 #include <memory>
 #include <unordered_map>
+#include <stdexcept>
+
 
 std::unique_ptr<Map> const& MapPersistenceAdapter::LoadMap(std::string name) {
     auto iterator = repository_.find(name);

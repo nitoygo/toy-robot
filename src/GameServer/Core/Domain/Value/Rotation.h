@@ -11,7 +11,7 @@ public:
 
     Rotation() = delete;
 
-    explicit Rotation(std::string direction) {
+    explicit Rotation(const std::string& direction) {
         if (direction != kLeftward && direction != kRightward) {
             throw InvalidActionException("Invalid rotation: " + direction); 
         }
