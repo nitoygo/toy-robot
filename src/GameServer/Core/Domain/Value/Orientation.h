@@ -1,5 +1,7 @@
 #pragma once
 
+#include "InvalidOrientationException.h"
+
 #include <string>
 
 class Orientation {
@@ -12,7 +14,13 @@ public:
 
     Orientation() : value_(kNorthFacing) {}
 
-    explicit Orientation(const std::string& value) : value_(value) {}
+    explicit Orientation(const std::string& value) {
+        if (value != kNorthFacing && value != kEastFacing && 
+            value != kWestFacing && value != kSouthFacing) {
+            throw InvalidOrientationException("Invalid orientation: " + value);
+        }
+        value_ = value;
+    }
 
     void RotateLeft();
 

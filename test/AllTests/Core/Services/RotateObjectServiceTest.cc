@@ -53,11 +53,11 @@ TEST(RotateObjectServiceTest, RotateUpdatesObjectOrientation)
     std::unique_ptr<BaseObject> const& persistedRobot = objectRepo->LoadObject(0);
     Orientation prevOrientation = persistedRobot->GetOrientation();
 
-    RotateObjectCommand command = RotateObjectCommand(0, Rotation::kLeftRotate);
+    RotateObjectCommand command = RotateObjectCommand(0, Rotation(Rotation::kLeftward));
     service.RotateObject(command);
     CHECK_TRUE(persistedRobot->GetOrientation() != prevOrientation);
 
-    command = RotateObjectCommand(0, Rotation::kRightRotate);
+    command = RotateObjectCommand(0, Rotation(Rotation::kRightward));
     service.RotateObject(command);
     CHECK_TRUE(persistedRobot->GetOrientation() == prevOrientation);
 }
@@ -72,6 +72,6 @@ TEST(RotateObjectServiceTest, ThrowsWhenObjectIsNonRotatable)
 
     std::unique_ptr<BaseObject> const& persistedObject = objectRepo->LoadObject(0);
 
-    RotateObjectCommand command = RotateObjectCommand(0, Rotation::kLeftRotate);
+    RotateObjectCommand command = RotateObjectCommand(0, Rotation(Rotation::kLeftward));
     CHECK_THROWS(InvalidActionException, service.RotateObject(command));
 }

@@ -7,10 +7,10 @@
 
 class MockRotateObjectService: public RotateObjectUseCase {
     inline void RotateObject(const RotateObjectCommand& command) {
-        if (command.rotation == Rotation::kLeftRotate) {
+        if (command.rotation.GetValue() == Rotation::kLeftward) {
             mock().actualCall("LEFT");
         }
-        else if (command.rotation == Rotation::kRightRotate) {
+        else if (command.rotation.GetValue() == Rotation::kRightward) {
             mock().actualCall("RIGHT");
         }
     }
