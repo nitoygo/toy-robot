@@ -1,23 +1,2 @@
-src/GameServer/Core/Domain/BaseObject.h:22:40: performance: Function parameter 'mapName' should be passed by const reference. [passedByValue]
-    void SetCurrentMapName(std::string mapName) { currentMapName_ = mapName; }
-                                       ^
-test/AllTests/Core/Domain/MapTest.cc:37:16: style: Variable 'height' is assigned a value that is never used. [unreadVariable]
-    int height = 5;
-               ^
-test/AllTests/Core/Domain/MapTest.cc:48:16: style: Variable 'height' is assigned a value that is never used. [unreadVariable]
-    int height = 5;
-               ^
-test/AllTests/Core/Domain/MapTest.cc:63:16: style: Variable 'height' is assigned a value that is never used. [unreadVariable]
-    int height = 5;
-               ^
-test/AllTests/Core/Services/MoveObjectServiceTest.cc:35:60: performance: Function parameter 'name' should be passed by const reference. [passedByValue]
-    inline std::unique_ptr<Map> const& LoadMap(std::string name) {
-                                                           ^
-test/TestApplication.cc:10:0: style: The function 'isEqual' is never used. [unusedFunction]
-
-^
-test/TestApplication.cc:15:0: style: The function 'valueToString' is never used. [unusedFunction]
-
-^
 nofile:0:0: information: Cppcheck cannot find all the include files (use --check-config for details) [missingInclude]
 
