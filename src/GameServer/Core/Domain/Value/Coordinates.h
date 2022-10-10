@@ -12,4 +12,8 @@ struct Coordinates {
     bool operator==(const Coordinates& other) const {
         return x == other.x && y == other.y;
     }
+
+    bool operator!=(const Coordinates& other) const {
+        return !(x == other.x && y == other.y);
+    }
 };

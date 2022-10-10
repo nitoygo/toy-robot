@@ -28,7 +28,6 @@ jobs:
 
     - name: Run tests
       run: |
-        sudo apt-get update
         sudo apt install -y cpputest
         cd test
         make

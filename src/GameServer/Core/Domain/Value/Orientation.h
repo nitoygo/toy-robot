@@ -20,6 +20,14 @@ public:
 
     const std::string& GetValue() const { return value_; }
 
+    bool operator==(const Orientation& other) const {
+        return value_ == other.value_;
+    }
+
+    bool operator!=(const Orientation& other) const {
+        return !(value_ == other.value_);
+    }
+
 private:
     std::string value_;
 };
