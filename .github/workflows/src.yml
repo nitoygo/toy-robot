@@ -29,20 +29,25 @@ jobs:
         cd src
         make
 
+    - name: Setup Tools
+      run: |
+        sudo apt install -y cpputest lcov valgrind
+
     - name: Run tests
       run: |
-        sudo apt install -y cpputest lcov
+        sudo apt install -y cpputest lcov valgrind
         cd test
         make test
         make coverage
+        make memcheck
 
     - name: Update coverage report
       run: |
         git config --global user.email "benitogothethird@hotmail.com"
         git config --global user.name "Benito Go III"
         git pull https://${{ secrets.GITHUB_TOKEN }}@github.com/nitoygo/toy-robot
-        git add reports/coverage
-        git commit -m "Update coverage report"
+        git add reports
+        git commit -m "Update reports"
         git push https://${{ secrets.GITHUB_TOKEN }}@github.com/nitoygo/toy-robot
 
   static-code-check:

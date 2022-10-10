@@ -10,7 +10,9 @@ TEST_DIR := $(PROJECT_DIR)/test
 BUILD_DIR := ./build
 
 COVERAGE_INFO = $(TEST_DIR)/coverage.info
-HTML_OUTPUT = $(PROJECT_DIR)/reports/coverage
+COVERAGE_HTML_OUTPUT = $(PROJECT_DIR)/reports/coverage
+
+MEMLEAK_OUTPUT = $(PROJECT_DIR)/reports/memleak_unit_test.txt
 
 SHARED_DIR := $(PROJECT_DIR)/include
 INCLUDE_DIRS := $(shell find $(SRC_DIR) -type d)
@@ -56,8 +58,11 @@ coverage: $(GCOV_SRC_FILES)
 	gcov $(GCOV_SRC_FILES)
 	lcov --capture --directory . --output-file $(COVERAGE_INFO)
 	lcov --remove $(COVERAGE_INFO) '*/usr/include/*' '*/test/*' -o $(COVERAGE_INFO)
-	mkdir -p $(HTML_OUTPUT)
-	genhtml $(COVERAGE_INFO) --output=$(HTML_OUTPUT)
+	mkdir -p $(COVERAGE_HTML_OUTPUT)
+	genhtml $(COVERAGE_INFO) --output=$(COVERAGE_HTML_OUTPUT)
+
+memcheck: $(TEST_TARGET)
+	valgrind --log-file=$(MEMLEAK_OUTPUT) --leak-check=full ./$(TEST_TARGET)
 
 clean:
 	rm -f *.o
