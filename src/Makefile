@@ -28,6 +28,6 @@ $(BUILD_DIR)/%.cc.o: %.cc
 
 .PHONY: clean
 clean:
-	rm -r $(BUILD_DIR)
+	rm -rf $(BUILD_DIR)
 
 -include $(DEPS)

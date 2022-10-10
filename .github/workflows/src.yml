@@ -4,8 +4,11 @@ on:
   push:
     branches: [ main ]
     paths:
-      - src/**
-      - test/**
+      - '**/Makefile'
+      - src/**/*.cc
+      - src/**/*.h
+      - test/**/*.cc
+      - test/**/*.h
   pull_request:
     branches: [ main ]
 
@@ -28,9 +31,19 @@ jobs:
 
     - name: Run tests
       run: |
-        sudo apt install -y cpputest
+        sudo apt install -y cpputest lcov
         cd test
-        make
+        make test
+        make coverage
+
+    - name: Update coverage report
+      run: |
+        git config --global user.email "benitogothethird@hotmail.com"
+        git config --global user.name "Benito Go III"
+        git pull https://${{ secrets.GITHUB_TOKEN }}@github.com/nitoygo/toy-robot
+        git add reports/coverage
+        git commit -m "Update coverage report"
+        git push https://${{ secrets.GITHUB_TOKEN }}@github.com/nitoygo/toy-robot
 
   static-code-check:
     name: Check for static code errors and warnings
@@ -48,7 +61,7 @@ jobs:
         std: c++20
         output_file: ./reports/static/cppcheck_report.txt
 
-    - name: Publish cppcheck report    
+    - name: Update cppcheck report
       uses: mikeal/publish-to-github-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

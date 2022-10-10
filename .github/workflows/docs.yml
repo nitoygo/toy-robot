@@ -4,7 +4,9 @@ on:
   push:
     branches: [ main ]
     paths:
-      - docs/plantuml/**
+      - '**.md'
+      - '**.puml'
+
   pull_request:
     branches: [ main ]
 

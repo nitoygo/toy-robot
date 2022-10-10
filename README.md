@@ -1,5 +1,8 @@
 # Toy Robot
 
+[![](https://github.com/nitoygo/toy-robot/actions/workflows/src.yml/badge.svg)](https://github.com/nitoygo/toy-robot/actions/workflows/src.yml)
+[![](https://github.com/nitoygo/toy-robot/actions/workflows/docs.yml/badge.svg)](https://github.com/nitoygo/toy-robot/actions/workflows/docs.yml)
+
 This project aims to solve and provide a demo application for [Toy Robot Code Challenge](ToyRobot.md).  
 
 ## Project Structure

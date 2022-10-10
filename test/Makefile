@@ -1,6 +1,5 @@
 # Unit Test Makefile
 
-TEST_TARGET = ToyRobotTest
 CXX = g++
 
 PROJECT_DIR := $(shell pwd)/..
@@ -9,6 +8,9 @@ CODE_DIR := $(SRC_DIR)/GameServer
 TEST_DIR := $(PROJECT_DIR)/test
 # BUILD_DIR := $(PROJECT_DIR)/build
 BUILD_DIR := ./build
+
+COVERAGE_INFO = $(TEST_DIR)/coverage.info
+HTML_OUTPUT = $(PROJECT_DIR)/reports/coverage
 
 SHARED_DIR := $(PROJECT_DIR)/include
 INCLUDE_DIRS := $(shell find $(SRC_DIR) -type d)
@@ -24,7 +26,7 @@ TEST_OBJECTS := $(TEST_SRC_FILES:%=$(BUILD_DIR)/%.o)
 
 INCLUDE_FLAGS := $(addprefix -I,$(INCLUDE_DIRS))
 
-CXXFLAGS += -g -std=c++2a
+CXXFLAGS += -g -std=c++2a -fprofile-arcs -ftest-coverage
 CPPFLAGS += -I/usr/local/include $(INCLUDE_FLAGS) -std=c++2a
 LD_LIBRARIES = -L/usr/local/lib -lCppUTest -lCppUTestExt
 
@@ -34,15 +36,28 @@ $(BUILD_DIR)/%.cc.o: %.cc
 	mkdir -p $(dir $@)
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
-CPPFLAGS += -I.
-APPLIB = GameServer.a
+TEST_TARGET = ToyRobotTest
+APPLIB = libGameServer.a
+LD_LIBRARIES += -L$(TEST_DIR) -lGameServer
 
-$(TEST_TARGET): $(TEST_OBJECTS) $(APPLIB)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ $(LD_LIBRARIES) $(LDFLAGS)
-	./$(TEST_TARGET)
+$(TEST_TARGET): $(TEST_OBJECTS) $(APPLIB) 
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ $^ $(APPLIB) $(LD_LIBRARIES) $(LDFLAGS) 
 
 $(APPLIB): $(APPLIB_OBJECTS)
 	$(AR) $(ARFLAGS) $@ $^
+
+GCOV_SRC_FILES = $(shell find $(BUILD_DIR) -name '*.gcno')
+GCOV_FILES = $(shell find $(BUILD_DIR) -name '*.gcov')
+
+test: $(TEST_TARGET)
+	./$(TEST_TARGET)
+
+coverage: $(GCOV_SRC_FILES)
+	gcov $(GCOV_SRC_FILES)
+	lcov --capture --directory . --output-file $(COVERAGE_INFO)
+	lcov --remove $(COVERAGE_INFO) '*/usr/include/*' '*/test/*' -o $(COVERAGE_INFO)
+	mkdir -p $(HTML_OUTPUT)
+	genhtml $(COVERAGE_INFO) --output=$(HTML_OUTPUT)
 
 clean:
 	rm -f *.o
@@ -50,3 +65,5 @@ clean:
 	rm -f $(TEST_TARGET)
 	rm -f $(APPLIB)
 	rm -rf $(BUILD_DIR)
+	rm -f $(COVERAGE_INFO)
+	rm -f $(GCOV_FILES)
