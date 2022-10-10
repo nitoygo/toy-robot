@@ -31,15 +31,13 @@ jobs:
 
     - name: Setup Tools
       run: |
-        sudo apt install -y cpputest lcov valgrind
+        sudo apt install -y cpputest lcov
 
     - name: Run tests
       run: |
-        sudo apt install -y cpputest lcov valgrind
         cd test
         make test
         make coverage
-        make memcheck
 
     - name: Update coverage report
       run: |
