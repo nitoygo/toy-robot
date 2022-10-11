@@ -2,13 +2,14 @@
 ### Pre-requisites
 
 - C++ compiler and runtime environment are available
+- `cpputest` is installed (as the unit test framework)
 - `lcov` is installed (for coverage report generation)
 
 ### Running Unit Tests
 
 In `test` directory, run the `make test` command:  
 ```  
-$ cd src
+$ cd test
 $ make test
 :
 ........................
