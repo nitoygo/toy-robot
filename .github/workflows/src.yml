@@ -21,6 +21,10 @@ jobs:
 
     steps:
 
+    - name: Setup Tools
+      run: |
+        sudo apt install -y cpputest lcov
+
     - name: Checkout code
       uses: actions/checkout@v3
 
@@ -28,10 +32,6 @@ jobs:
       run: |
         cd src
         make
-
-    - name: Setup Tools
-      run: |
-        sudo apt install -y cpputest lcov
 
     - name: Run tests
       run: |
@@ -45,8 +45,8 @@ jobs:
         git config --global user.email "benitogothethird@hotmail.com"
         git config --global user.name "Benito Go III"
         git pull https://${{ secrets.GITHUB_TOKEN }}@github.com/nitoygo/toy-robot
-        git add reports
-        git commit -m "Update reports"
+        git add reports/coverage
+        git commit -m "Update code coverage analysis reports"
         git push https://${{ secrets.GITHUB_TOKEN }}@github.com/nitoygo/toy-robot
 
   static-code-check:
@@ -55,19 +55,23 @@ jobs:
 
     steps:
 
+    - name: Setup Tools
+      run: |
+        sudo apt install -y cppcheck
+
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: Run cppcheck
-      uses: deep5050/cppcheck-action@main
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN}}
-        std: c++20
-        exclude_check: test
-        output_file: ./reports/static/cppcheck_report.txt
+    - name: Run static code check
+      run: |
+        cd src
+        make static-check
 
-    - name: Update cppcheck report
-      uses: mikeal/publish-to-github-action@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        BRANCH_NAME: 'main'
+    - name: Update static code report
+      run: |
+        git config --global user.email "benitogothethird@hotmail.com"
+        git config --global user.name "Benito Go III"
+        git pull https://${{ secrets.GITHUB_TOKEN }}@github.com/nitoygo/toy-robot
+        git add reports/static
+        git commit -m "Update static code analysis reports"
+        git push https://${{ secrets.GITHUB_TOKEN }}@github.com/nitoygo/toy-robot

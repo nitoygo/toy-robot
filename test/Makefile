@@ -9,8 +9,11 @@ TEST_DIR := $(PROJECT_DIR)/test
 # BUILD_DIR := $(PROJECT_DIR)/build
 BUILD_DIR := ./build
 
+REPORTS_OUTPUT_DIR = $(PROJECT_DIR)/reports/
+
 COVERAGE_INFO = $(TEST_DIR)/coverage.info
-COVERAGE_OUTPUT_DIR = $(PROJECT_DIR)/reports/coverage
+COVERAGE_OUTPUT_DIR = $(REPORTS_OUTPUT_DIR)/coverage
+COVERAGE_OUTPUT_README = $(COVERAGE_OUTPUT_DIR)/README.md
 COVERAGE_TEXT_OUTPUT = $(COVERAGE_OUTPUT_DIR)/gcov_report.txt
 COVERAGE_HTML_OUTPUT = $(COVERAGE_OUTPUT_DIR)/html
 
@@ -64,10 +67,13 @@ coverage_report_html_view: $(GCOV_FILES)
 	genhtml --rc lcov_branch_coverage=1 $(COVERAGE_INFO) --output=$(COVERAGE_HTML_OUTPUT) 
 
 coverage_report_text_summary: $(GCOV_FILES)
-	rm -f $(COVERAGE_TEXT_OUTPUT)
-	lcov --rc lcov_branch_coverage=1 --summary $(COVERAGE_INFO) >> $(COVERAGE_TEXT_OUTPUT)
+	lcov --rc lcov_branch_coverage=1 --summary $(COVERAGE_INFO) > $(COVERAGE_TEXT_OUTPUT)
 	echo "" >> $(COVERAGE_TEXT_OUTPUT)
 	lcov --rc lcov_branch_coverage=1 --quiet --list $(COVERAGE_INFO) >> $(COVERAGE_TEXT_OUTPUT)
+	echo "## Source Code Coverage Report  " > $(COVERAGE_OUTPUT_README)
+	echo '```' >> $(COVERAGE_OUTPUT_README)
+	cat $(COVERAGE_TEXT_OUTPUT) >> $(COVERAGE_OUTPUT_README)
+	echo '```' >> $(COVERAGE_OUTPUT_README)
 
 clean:
 	rm -f *.o

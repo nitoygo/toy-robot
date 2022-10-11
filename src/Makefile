@@ -30,4 +30,16 @@ $(BUILD_DIR)/%.cc.o: %.cc
 clean:
 	rm -rf $(BUILD_DIR)
 
+STATIC_OUTPUT_DIR = ../reports/static
+STATIC_OUTPUT_README = $(STATIC_OUTPUT_DIR)/README.md
+STATIC_TEXT_OUTPUT = $(STATIC_OUTPUT_DIR)/cppcheck_report.txt
+
+static-check:
+	mkdir -p $(STATIC_OUTPUT_DIR)
+	cppcheck --std=c++20 --enable=all --suppress=missingInclude $(SRC_DIR) 2> $(STATIC_TEXT_OUTPUT)
+	echo "## Static Code Analaysis Report  " > $(STATIC_OUTPUT_README)
+	echo '```' >> $(STATIC_OUTPUT_README)
+	cat $(STATIC_TEXT_OUTPUT) >> $(STATIC_OUTPUT_README)
+	echo '```' >> $(STATIC_OUTPUT_README)
+
 -include $(DEPS)
