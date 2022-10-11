@@ -1,0 +1,69 @@
+Reading tracefile /Users/benito.go/Workspaces/cpp/toy-robot/test/../test/coverage.info
+Summary coverage rate:
+  lines......: 91.8% (346 of 377 lines)
+  functions..: 80.0% (192 of 240 functions)
+  branches...: 42.1% (214 of 508 branches)
+
+                                               |Lines      |Functions|Branches  
+Filename                                       |Rate    Num|Rate  Num|Rate   Num
+================================================================================
+[/Users/benito.go/Workspaces/cpp/toy-robot/src/GameServer/Adapters/In/PlayerControls/]
+BaseController.h                               | 100%     2|50.0%   4|    -    0
+GetObjectPositionController.cc                 | 100%    10| 100%   1|55.0%   40
+GetObjectPositionController.h                  | 100%     3|80.0%   5|    -    0
+MoveObjectController.cc                        | 100%     7| 100%   1|75.0%    4
+MoveObjectController.h                         | 100%     3|80.0%   5|    -    0
+PlaceObjectController.cc                       |69.6%    23| 100%   3|31.7%   60
+PlaceObjectController.h                        | 100%     3|80.0%   5|    -    0
+RequestRouter.cc                               |62.5%    16| 100%   2|25.0%   48
+RequestRouter.h                                | 100%     1| 100%   4|    -    0
+RotateObjectController.cc                      | 100%     7| 100%   1|58.3%   12
+RotateObjectController.h                       | 100%     3|80.0%   5|    -    0
+
+[/Users/benito.go/Workspaces/cpp/toy-robot/src/GameServer/Adapters/Out/Persistence/]
+MapPersistenceAdapter.cc                       | 100%     9| 100%   2|57.1%   14
+MapPersistenceAdapter.h                        | 100%     1|80.0%   5|    -    0
+ObjectPersistenceAdapter.cc                    | 100%     9| 100%   2|57.1%   14
+ObjectPersistenceAdapter.h                     | 100%     1|80.0%   5|    -    0
+
+[/Users/benito.go/Workspaces/cpp/toy-robot/src/GameServer/Core/]
+Domain/BaseObject.h                            | 100%    11|83.3%  12|50.0%    8
+Domain/Exception/BaseException.h               | 100%     2|50.0%   4|    -    0
+Domain/Exception/InvalidActionException.h      | 100%     2|80.0%   5|    -    0
+Domain/Exception/InvalidCoordinatesException.h | 100%     2|80.0%   5|    -    0
+Domain/Exception/InvalidObjectIdException.h    | 100%     2|80.0%   5|    -    0
+Domain/Exception/InvalidOrientationException.h | 0.0%     2| 0.0%   5|    -    0
+Domain/Exception/InvalidParametersException.h  | 0.0%     2| 0.0%   5|    -    0
+Domain/Exception/InvalidStateException.h       | 100%     2|80.0%   5|    -    0
+Domain/Map.cc                                  |78.9%    38| 100%   9|19.0%   58
+Domain/Map.h                                   | 100%     5| 100%   7|    -    0
+Domain/Movable.h                               | 100%     2|50.0%   4|    -    0
+Domain/Placeable.h                             | 100%     2|50.0%   4|    -    0
+Domain/Robot.cc                                | 100%    14| 100%   4|    -    0
+Domain/Robot.h                                 | 100%     4| 100%   7|    -    0
+Domain/Rotatable.h                             | 100%     2|50.0%   4|    -    0
+Domain/Value/Coordinates.h                     | 100%     6| 100%   6|50.0%    4
+Domain/Value/Orientation.cc                    | 100%    32| 100%   6|87.5%   16
+Domain/Value/Orientation.h                     |92.3%    13| 100%  12|22.2%   36
+Domain/Value/Rotation.cc                       | 100%     2| 100%   2|    -    0
+Domain/Value/Rotation.h                        |85.7%     7| 100%   8|28.6%   14
+Ports/In/GetObjectPositionUseCase.h            | 100%     2|50.0%   4|    -    0
+Ports/In/MoveObjectUseCase.h                   | 100%     2|50.0%   4|    -    0
+Ports/In/PlaceObjectUseCase.h                  | 100%     2|50.0%   4|    -    0
+Ports/In/RotateObjectUseCase.h                 | 100%     2|50.0%   4|    -    0
+Ports/In/data/MoveObjectCommand.h              | 100%     1| 100%   2|    -    0
+Ports/In/data/PlaceObjectCommand.h             | 100%     3| 100%   4|50.0%    2
+Ports/In/data/QueryResponse.h                  | 100%     5| 100%   7|    -    0
+Ports/In/data/RotateObjectCommand.h            | 100%     3| 100%   5|    -    0
+Ports/Out/MapRepository.h                      | 100%     2|50.0%   4|    -    0
+Ports/Out/ObjectRepository.h                   | 100%     2|50.0%   4|    -    0
+Services/GetObjectPositionService.cc           | 100%    13| 100%   1|46.3%   54
+Services/GetObjectPositionService.h            | 100%     3|80.0%   5|    -    0
+Services/MoveObjectService.cc                  |95.2%    42| 100%   4|62.9%   62
+Services/MoveObjectService.h                   | 100%     4|80.0%   5|    -    0
+Services/PlaceObjectService.cc                 |88.9%    18| 100%   2|35.0%   40
+Services/PlaceObjectService.h                  | 100%     4|80.0%   5|    -    0
+Services/RotateObjectService.cc                | 100%    16| 100%   2|59.1%   22
+Services/RotateObjectService.h                 | 100%     3|80.0%   5|    -    0
+================================================================================
+                                         Total:|91.8%   377|80.0% 240|42.1%  508

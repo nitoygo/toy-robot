@@ -109,9 +109,9 @@ void RunDemoClient(const ApplicationContext& appContext) {
             if (response.GetCode() == ResponseCode::kSuccess) {
                 if (request.GetName() == "REPORT") {
                     std::cout << "Output: " <<
-                    response.GetData("x") << "," << 
-                    response.GetData("y") << "," <<
-                    response.GetData("f") << "\n"; 
+                        response.GetData("x") << "," << 
+                        response.GetData("y") << "," <<
+                        response.GetData("f") << "\n"; 
                 }
             }
             else {

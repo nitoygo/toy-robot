@@ -6,6 +6,7 @@
 
 #include <string>
 #include <iostream>
+#include <stdexcept>
 
 
 Response RequestRouter::Route(const Request& request) const {
@@ -13,14 +14,16 @@ Response RequestRouter::Route(const Request& request) const {
         return controllerMap_.at(request.GetName())->handleRequest(request);
     }
     catch(const InvalidObjectIdException& ioe) {
-        return Response(ResponseCode::kInvalidParameterError);
+        return Response(ResponseCode::kInvalidParameterError)
+            .WithData("message", ioe.what());
     }
     catch(const InvalidParametersException& ipe) {
-        return Response(ResponseCode::kInvalidParameterError);
+        return Response(ResponseCode::kInvalidParameterError)
+            .WithData("message", ipe.what());
     }
     catch(const std::exception& e) {
-        std::cerr << "Unexpected error: " << e.what() << '\n';
-        return Response(ResponseCode::kGeneralError);
+        return Response(ResponseCode::kGeneralError)
+            .WithData("message", e.what());
     }
 }
 

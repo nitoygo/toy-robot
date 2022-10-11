@@ -10,7 +10,9 @@ TEST_DIR := $(PROJECT_DIR)/test
 BUILD_DIR := ./build
 
 COVERAGE_INFO = $(TEST_DIR)/coverage.info
-COVERAGE_HTML_OUTPUT = $(PROJECT_DIR)/reports/coverage
+COVERAGE_OUTPUT_DIR = $(PROJECT_DIR)/reports/coverage
+COVERAGE_TEXT_OUTPUT = $(COVERAGE_OUTPUT_DIR)/gcov_report.txt
+COVERAGE_HTML_OUTPUT = $(COVERAGE_OUTPUT_DIR)/html
 
 SHARED_DIR := $(PROJECT_DIR)/include
 INCLUDE_DIRS := $(shell find $(SRC_DIR) -type d)
@@ -53,17 +55,19 @@ test: $(TEST_TARGET)
 	./$(TEST_TARGET)
 
 coverage: $(GCOV_SRC_FILES)
-	gcov $(GCOV_SRC_FILES)
-	lcov --capture --directory . --output-file $(COVERAGE_INFO)
-	lcov --remove $(COVERAGE_INFO) '*/include/*' '*/test/*' -o $(COVERAGE_INFO)
+	gcov -b -c $(GCOV_SRC_FILES)
+	lcov --rc lcov_branch_coverage=1 --capture --directory . --output-file $(COVERAGE_INFO)
+	lcov --rc lcov_branch_coverage=1 --remove $(COVERAGE_INFO) '*/include/*' '*/test/*' -o $(COVERAGE_INFO)
 
-coverage_report_full: $(GCOV_FILES)
+coverage_report_html_view: $(GCOV_FILES)
 	mkdir -p $(COVERAGE_HTML_OUTPUT)
-	genhtml $(COVERAGE_INFO) --output=$(COVERAGE_HTML_OUTPUT) 
+	genhtml --rc lcov_branch_coverage=1 $(COVERAGE_INFO) --output=$(COVERAGE_HTML_OUTPUT) 
 
-coverage_report_summary: $(GCOV_FILES)
-	mkdir -p $(COVERAGE_HTML_OUTPUT)
-	genhtml $(COVERAGE_INFO) --output=$(COVERAGE_HTML_OUTPUT) --no-source
+coverage_report_text_summary: $(GCOV_FILES)
+	rm -f $(COVERAGE_TEXT_OUTPUT)
+	lcov --rc lcov_branch_coverage=1 --summary $(COVERAGE_INFO) >> $(COVERAGE_TEXT_OUTPUT)
+	echo "" >> $(COVERAGE_TEXT_OUTPUT)
+	lcov --rc lcov_branch_coverage=1 --quiet --list $(COVERAGE_INFO) >> $(COVERAGE_TEXT_OUTPUT)
 
 clean:
 	rm -f *.o
