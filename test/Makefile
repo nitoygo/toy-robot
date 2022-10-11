@@ -55,9 +55,15 @@ test: $(TEST_TARGET)
 coverage: $(GCOV_SRC_FILES)
 	gcov $(GCOV_SRC_FILES)
 	lcov --capture --directory . --output-file $(COVERAGE_INFO)
-	lcov --remove $(COVERAGE_INFO) '*/usr/include/*' '*/test/*' -o $(COVERAGE_INFO)
+	lcov --remove $(COVERAGE_INFO) '*/include/*' '*/test/*' -o $(COVERAGE_INFO)
+
+coverage_report_full: $(GCOV_FILES)
 	mkdir -p $(COVERAGE_HTML_OUTPUT)
-	genhtml $(COVERAGE_INFO) --output=$(COVERAGE_HTML_OUTPUT)
+	genhtml $(COVERAGE_INFO) --output=$(COVERAGE_HTML_OUTPUT) 
+
+coverage_report_summary: $(GCOV_FILES)
+	mkdir -p $(COVERAGE_HTML_OUTPUT)
+	genhtml $(COVERAGE_INFO) --output=$(COVERAGE_HTML_OUTPUT) --no-source
 
 clean:
 	rm -f *.o

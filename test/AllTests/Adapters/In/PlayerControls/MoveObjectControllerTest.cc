@@ -47,7 +47,7 @@ TEST(MoveObjectControllerTest, ThrowsWhenParameterIsMissing)
         std::make_unique<MockMoveObjectService>()
     );
 
-    mock().expectNoCall("GetObjectPosition");
+    mock().expectNoCall("MoveObject");
 
     Request request = Request("MOVE"); // no id or units
     CHECK_THROWS(std::out_of_range, controller.handleRequest(request));

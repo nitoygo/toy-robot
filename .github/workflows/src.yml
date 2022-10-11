@@ -38,6 +38,7 @@ jobs:
         cd test
         make test
         make coverage
+        make coverage_report_summary
 
     - name: Update coverage report
       run: |
