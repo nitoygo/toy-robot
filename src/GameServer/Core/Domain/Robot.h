@@ -13,8 +13,6 @@ class Robot : public BaseObject,
 {
 public:
     explicit Robot(int id) : BaseObject(id) {}
-    explicit Robot(int id, const Coordinates& coordinates, const Orientation& orientation)
-        : BaseObject(id, coordinates, orientation) {}
 
     void Place(
         const std::string& mapName, 
@@ -26,6 +24,4 @@ public:
     void RotateLeft() override;
 
     void RotateRight() override;
-
-
 };

@@ -1,36 +1,51 @@
 #include "Orientation.h"
 
-const std::string Orientation::kNorthFacing = "NORTH";
-const std::string Orientation::kEastFacing = "EAST";
-const std::string Orientation::kWestFacing = "WEST";
-const std::string Orientation::kSouthFacing = "SOUTH";
+Orientation& Orientation::North() {
+    static Orientation north(kNorth);
+    return north;
+}
+
+Orientation& Orientation::East() {
+    static Orientation east(kEast);
+    return east;
+}
+
+Orientation& Orientation::West() {
+    static Orientation west(kWest);
+    return west;
+}
+
+Orientation& Orientation::South() {
+    static Orientation south(kSouth);
+    return south;
+}
 
 void Orientation::RotateLeft() {
-    if (value_ == kNorthFacing) {
-        value_ = kWestFacing;
+    if (value_ == kNorth) {
+        value_ = kWest;
     }
-    else if (value_ == kWestFacing) {
-        value_ = kSouthFacing;
+    else if (value_ == kWest) {
+        value_ = kSouth;
     }
-    else if (value_ == kSouthFacing) {
-        value_ = kEastFacing;
+    else if (value_ == kSouth) {
+        value_ = kEast;
     }
-    else if (value_ == kEastFacing) {
-        value_ = kNorthFacing;
+    else if (value_ == kEast) {
+        value_ = kNorth;
     }
 }
 
 void Orientation::RotateRight() {
-    if (value_ == kNorthFacing) {
-        value_ = kEastFacing;
+    if (value_ == kNorth) {
+        value_ = kEast;
     }
-    else if (value_ == kEastFacing) {
-        value_ = kSouthFacing;
+    else if (value_ == kEast) {
+        value_ = kSouth;
     }
-    else if (value_ == kSouthFacing) {
-        value_ = kWestFacing;
+    else if (value_ == kSouth) {
+        value_ = kWest;
     }
-    else if (value_ == kWestFacing) {
-        value_ = kNorthFacing;
+    else if (value_ == kWest) {
+        value_ = kNorth;
     }
 }

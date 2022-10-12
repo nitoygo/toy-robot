@@ -42,16 +42,16 @@ Coordinates GetMoveCoordinates(std::unique_ptr<BaseObject> const& object, int un
     int x = current.x;
     int y = current.y;
 
-    if (orientation.GetValue() == Orientation::kNorthFacing) {
+    if (orientation == Orientation::North()) {
         y += units;
     }
-    else if (orientation.GetValue() == Orientation::kEastFacing) {
+    else if (orientation == Orientation::East()) {
         x += units;
     }
-    else if (orientation.GetValue() == Orientation::kSouthFacing && (y - units) >= 0) {
+    else if (orientation == Orientation::South() && (y - units) >= 0) {
         y -= units;
     }
-    else if (orientation.GetValue() == Orientation::kWestFacing && (x - units) >= 0) {
+    else if (orientation == Orientation::West() && (x - units) >= 0) {
         x -= units;
     }
 

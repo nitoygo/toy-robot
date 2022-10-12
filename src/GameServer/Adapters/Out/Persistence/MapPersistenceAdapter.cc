@@ -6,7 +6,7 @@
 #include <stdexcept>
 
 
-std::unique_ptr<Map> const& MapPersistenceAdapter::LoadMap(std::string name) {
+std::unique_ptr<Map> const& MapPersistenceAdapter::LoadMap(const std::string& name) {
     auto iterator = repository_.find(name);
     if (iterator == repository_.end())
     {

@@ -9,9 +9,8 @@ class BaseObject
 {
 public:
     BaseObject() = default;
+
     explicit BaseObject(int id) : id_(id) {}
-    explicit BaseObject(int id, const Coordinates& coordinates, const Orientation& orientation)
-        : id_(id), coordinates_(coordinates), orientation_(orientation) {}
 
     virtual ~BaseObject() = default;
 
@@ -33,7 +32,7 @@ public:
 
 
 protected:
-    int id_;
+    int id_ = -1;
     std::string currentMapName_;
     Coordinates coordinates_;
     Orientation orientation_;

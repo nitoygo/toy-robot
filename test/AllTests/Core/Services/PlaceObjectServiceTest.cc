@@ -26,7 +26,7 @@ private:
 
 class MockMapRepository : public MapRepository {
 public:
-    inline std::unique_ptr<Map> const& LoadMap(std::string name) {
+    inline std::unique_ptr<Map> const& LoadMap(const std::string& name) {
         return map_;
     }
 
@@ -61,19 +61,20 @@ TEST(PlaceObjectServiceTest, PlaceObjectUpdatesObjectPositionAttributes)
 
     PlaceObjectService service(objectRepo, mapRepo);
 
-    PlaceObjectCommand command(0, "Table", Coordinates(4,4), Orientation(Orientation::kSouthFacing));
+    PlaceObjectCommand command(0, "Table", Coordinates(4,4), Orientation::South());
     service.PlaceObject(command);
 
     std::unique_ptr<BaseObject> const& persistedRobot = objectRepo->LoadObject(0);
     CHECK_TRUE("Table" == persistedRobot->GetCurrentMapName());
     CHECK_TRUE(Coordinates(4,4) == persistedRobot->GetCoordinates());
-    CHECK_TRUE(Orientation(Orientation::kSouthFacing) == persistedRobot->GetOrientation());
+    CHECK_TRUE(Orientation::South() == persistedRobot->GetOrientation());
 }
 
 TEST(PlaceObjectServiceTest, ThrowsWhenPlacedOutOfBounds)
 {
     std::shared_ptr<ObjectRepository> objectRepo = std::make_shared<MockObjectRepository>();
     std::unique_ptr<BaseObject> robot(std::make_unique<Robot>(0));
+    robot->SetOrientation(Orientation::North());
     objectRepo->StoreObject(robot);
 
     std::shared_ptr<MapRepository> mapRepo = std::make_shared<MockMapRepository>();
@@ -82,12 +83,12 @@ TEST(PlaceObjectServiceTest, ThrowsWhenPlacedOutOfBounds)
 
     PlaceObjectService service(objectRepo, mapRepo);
 
-    PlaceObjectCommand command(0, "Table", Coordinates(5,5), Orientation(Orientation::kSouthFacing));
+    PlaceObjectCommand command(0, "Table", Coordinates(5,5), Orientation::South());
     CHECK_THROWS(InvalidCoordinatesException, service.PlaceObject(command));
 
     // should stay as defaults
     std::unique_ptr<BaseObject> const& persistedRobot = objectRepo->LoadObject(0);
     CHECK_TRUE("" == persistedRobot->GetCurrentMapName());
     CHECK_TRUE(Coordinates(0,0) == persistedRobot->GetCoordinates());
-    CHECK_TRUE(Orientation(Orientation::kNorthFacing) == persistedRobot->GetOrientation());
+    CHECK_TRUE(Orientation::North() == persistedRobot->GetOrientation());
 }

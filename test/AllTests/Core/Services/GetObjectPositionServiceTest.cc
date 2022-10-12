@@ -40,7 +40,9 @@ TEST(GetObjectPositionServiceTest, ResponseCorrespondsToObjectState)
     std::shared_ptr<ObjectRepository> objectRepo = std::make_shared<MockObjectRepository>();
     GetObjectPositionService service(objectRepo);
 
-    std::unique_ptr<BaseObject> robot(std::make_unique<Robot>(0, Coordinates(2,3), Orientation(Orientation::kSouthFacing)));
+    std::unique_ptr<BaseObject> robot(std::make_unique<Robot>(0));
+    robot->SetCoordinates(Coordinates(2,3));
+    robot->SetOrientation(Orientation::South());
     robot->SetCurrentMapName("Table");
     objectRepo->StoreObject(robot);
 
@@ -55,7 +57,9 @@ TEST(GetObjectPositionServiceTest, ThrowsWhenObjectHasNoCurrentMap)
     std::shared_ptr<ObjectRepository> objectRepo = std::make_shared<MockObjectRepository>();
     GetObjectPositionService service(objectRepo);
 
-    std::unique_ptr<BaseObject> robot(std::make_unique<Robot>(0, Coordinates(2,3), Orientation(Orientation::kSouthFacing)));
+    std::unique_ptr<BaseObject> robot(std::make_unique<Robot>(0));
+    robot->SetCoordinates(Coordinates(2,3));
+    robot->SetOrientation(Orientation::South());
     objectRepo->StoreObject(robot);
 
     CHECK_THROWS(InvalidStateException, service.GetObjectPosition(0));
@@ -66,7 +70,7 @@ TEST(GetObjectPositionServiceTest, ThrowsWhenObjectIsNotMovable)
     std::shared_ptr<ObjectRepository> objectRepo = std::make_shared<MockObjectRepository>();
     GetObjectPositionService service(objectRepo);
 
-    std::unique_ptr<BaseObject> robot(std::make_unique<Robot>(0, Coordinates(2,3), Orientation(Orientation::kSouthFacing)));
+    std::unique_ptr<BaseObject> robot(std::make_unique<Robot>(0));
     objectRepo->StoreObject(robot);
 
     CHECK_THROWS(InvalidStateException, service.GetObjectPosition(0));

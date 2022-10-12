@@ -2,23 +2,29 @@
 
 #include "InvalidActionException.h"
 
+#include <string>
+#include <string_view>
 
 class Rotation {
 
 public:
-    static const std::string kLeftward;
-    static const std::string kRightward;
+    static constexpr auto kLeft = std::string_view("LEFT");
+    static constexpr auto kRight = std::string_view("RIGHT");
 
-    Rotation() = delete;
-
-    explicit Rotation(const std::string& direction) {
-        if (direction != kLeftward && direction != kRightward) {
-            throw InvalidActionException("Invalid rotation: " + direction); 
+    explicit Rotation(const std::string_view direction) {
+        if (direction != kLeft && direction != kRight) {
+            throw InvalidActionException("Invalid rotation");
         }
         direction_ = direction;
     }
 
-    const std::string& GetValue() const { return direction_; }
+    Rotation() = delete;
+    ~Rotation() = default;
+
+    static Rotation& Left();
+    static Rotation& Right();
+
+    const std::string GetValue() const { return std::string(direction_); }
 
     bool operator==(const Rotation& other) const {
         return direction_ == other.direction_;
@@ -28,6 +34,6 @@ public:
         return !(direction_ == other.direction_);
     }
 
-protected:
-    std::string direction_;
+private:
+    std::string_view direction_;
 };

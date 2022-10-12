@@ -27,11 +27,8 @@ void RunDemoClient(const ApplicationContext& appContext);
 
 int main()
 {
-    ApplicationContext appContext;
-    appContext.initialize();
-
-    std::shared_ptr<MapRepository> mapRepository = appContext.GetMapRepository();
-    std::shared_ptr<ObjectRepository> objectRepository = appContext.GetObjectRepository();
+    std::shared_ptr<MapRepository> mapRepository = App().GetMapRepository();
+    std::shared_ptr<ObjectRepository> objectRepository = App().GetObjectRepository();
 
     // prepare and store table as a map with an area of 5x5 units
     std::unique_ptr<Map> table(std::make_unique<Map>(
@@ -46,7 +43,7 @@ int main()
     objectRepository->StoreObject(toyRobot);
 
     // start listening for commands
-    RunDemoClient(appContext);
+    RunDemoClient(App());
 
     return 0;
 }
@@ -54,14 +51,14 @@ int main()
 void RunDemoClient(const ApplicationContext& appContext) {
     std::shared_ptr<RequestRouter> requestRouter = appContext.GetRequestRouter();
 
-    Request request;
-
     while (1) {
-        std::string requestName;
+        Request request;
+
         std::string inputRequest;
         std::getline(std::cin >> std::ws, inputRequest);
 
         if (inputRequest.starts_with("PLACE")) {
+            std::string requestName;
             std::string requestParams, x, y, direction;
 
             std::stringstream requestStream(inputRequest);

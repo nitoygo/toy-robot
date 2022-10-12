@@ -10,7 +10,7 @@
 class MapPersistenceAdapter : public MapRepository {
 
 public:
-    std::unique_ptr<Map> const& LoadMap(std::string name) override;
+    std::unique_ptr<Map> const& LoadMap(const std::string& name) override;
 
     void StoreMap(std::unique_ptr<Map>& map) override;
 

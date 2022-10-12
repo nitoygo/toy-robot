@@ -43,9 +43,9 @@ TEST_GROUP(RotateObjectServiceTest)
 TEST(RotateObjectServiceTest, RotateUpdatesObjectOrientation)
 {
     std::shared_ptr<ObjectRepository> objectRepo = std::make_shared<MockObjectRepository>();
-    std::unique_ptr<BaseObject> robot(std::make_unique<Robot>(0, 
-        Coordinates(0,0), 
-        Orientation(Orientation::kNorthFacing)));
+    std::unique_ptr<BaseObject> robot(std::make_unique<Robot>(0));
+    robot->SetCoordinates(Coordinates(0,0));
+    robot->SetOrientation(Orientation::North());
     objectRepo->StoreObject(robot);
 
     RotateObjectService service(objectRepo);
@@ -53,11 +53,11 @@ TEST(RotateObjectServiceTest, RotateUpdatesObjectOrientation)
     std::unique_ptr<BaseObject> const& persistedRobot = objectRepo->LoadObject(0);
     Orientation prevOrientation = persistedRobot->GetOrientation();
 
-    RotateObjectCommand command = RotateObjectCommand(0, Rotation(Rotation::kLeftward));
+    RotateObjectCommand command = RotateObjectCommand(0, Rotation(Rotation::Left()));
     service.RotateObject(command);
     CHECK_TRUE(persistedRobot->GetOrientation() != prevOrientation);
 
-    command = RotateObjectCommand(0, Rotation(Rotation::kRightward));
+    command = RotateObjectCommand(0, Rotation(Rotation::Right()));
     service.RotateObject(command);
     CHECK_TRUE(persistedRobot->GetOrientation() == prevOrientation);
 }
@@ -72,6 +72,6 @@ TEST(RotateObjectServiceTest, ThrowsWhenObjectIsNonRotatable)
 
     std::unique_ptr<BaseObject> const& persistedObject = objectRepo->LoadObject(0);
 
-    RotateObjectCommand command = RotateObjectCommand(0, Rotation(Rotation::kLeftward));
+    RotateObjectCommand command = RotateObjectCommand(0, Rotation(Rotation::Left()));
     CHECK_THROWS(InvalidActionException, service.RotateObject(command));
 }

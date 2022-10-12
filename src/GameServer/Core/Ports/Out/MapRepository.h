@@ -10,7 +10,7 @@ class MapRepository {
 public:
     virtual ~MapRepository() = default;
 
-    virtual std::unique_ptr<Map> const& LoadMap(std::string name) = 0;
+    virtual std::unique_ptr<Map> const& LoadMap(const std::string& name) = 0;
 
     virtual void StoreMap(std::unique_ptr<Map>& map) = 0;
 

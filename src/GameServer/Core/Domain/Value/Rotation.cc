@@ -1,4 +1,11 @@
 #include "Rotation.h"
 
-const std::string Rotation::kLeftward = "LEFT";
-const std::string Rotation::kRightward = "RIGHT";
+Rotation& Rotation::Left() {
+    static Rotation rotation(kLeft);
+    return rotation;
+}
+
+Rotation& Rotation::Right() {
+    static Rotation rotation(kRight);
+    return rotation;
+}
