@@ -41,6 +41,7 @@ jobs:
         make coverage_report_text_summary
 
     - name: Update coverage report
+      continue-on-error: true
       run: |
         git config --global user.email "benitogothethird@hotmail.com"
         git config --global user.name "Benito Go III"
@@ -68,6 +69,7 @@ jobs:
         make static-check
 
     - name: Update static code report
+      continue-on-error: true
       run: |
         git config --global user.email "benitogothethird@hotmail.com"
         git config --global user.name "Benito Go III"
